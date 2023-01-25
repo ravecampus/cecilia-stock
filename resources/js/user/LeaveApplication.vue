@@ -251,6 +251,7 @@ export default {
             errors:[],
             usable:[],
             consumeleave:[],
+            borrowleave:[],
             btncap:"Send",
             leave_types:[],
             leave_type:{},
@@ -386,7 +387,7 @@ export default {
             this.leave_types.forEach(val => {
                 if(val.id == id){
                     this.leave_type = {'id':val.id, 'des' : val.description, 'num':val.number_of_days };
-                    this.availeave = val.number_of_days - this.checkConsume(val.id);
+                    this.availeave = val.number_of_days - (this.checkConsume(val.id) + this.checkBorrow(val.id));
                 }
             });
         },
@@ -395,7 +396,7 @@ export default {
             this.leave_types.forEach((vl,idx) => {
                 if(vl.id == id){
                     this.borrow = {'id':vl.id, 'des' : vl.description, 'num':vl.number_of_days };
-                    this.availuse= vl.number_of_days - this.checkConsume(vl.id);
+                    this.availuse= vl.number_of_days - (this.checkConsume(vl.id) + this.checkBorrow(vl.id));
 
                 }
             });
@@ -405,6 +406,16 @@ export default {
             this.consumeleave.forEach(val=>{
                 if(id == val.leave_type_id){
                     ret += val.leave;
+                }
+            });
+
+            return ret;
+        },
+        checkBorrow(id){
+            let ret = 0;
+            this.borrowleave.forEach(val=>{
+                if(id == val.leave_type_id){
+                    ret += val.credits;
                 }
             });
 
@@ -444,9 +455,10 @@ export default {
                         this.btncap = "Send";
                         this.errors = [];
                         this.post = {};
-                        this.$emit('show',{'message':'Leave Application sent!', 'status':4});
+                        this.$emit('show',{'message':'Leave Application sent!', 'status':3});
                         this.listLeave();
                         this.getConsumeLeave();
+                        this.getBorrowLeave();
                         this.availeave = 0;
                     }).catch(err=>{
                         this.btncap = "Send";
@@ -521,14 +533,20 @@ export default {
                 });
             });
         },
-
-
+        getBorrowLeave(){
+            this.$axios.get('sanctum/csrf-cookie').then(response=>{
+                this.$axios.get('api/borrow-leave').then(res=>{
+                    this.borrowleave = res.data;
+                });
+            });
+        },
 
     },
     mounted() {
         this.listLeaveType();
         this.listLeave();
         this.getConsumeLeave();
+        this.getBorrowLeave();
         if(window.Laravel.isLoggedin){
             this.user = window.Laravel.user;
             this.auth = true;

@@ -35,6 +35,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('change-password', [UserController::class, 'changePassword']);
     Route::resource('user', UserController::class);
     Route::get('consume-leave', [EmployeeLeaveController::class, 'authConsumeLeave']);
+    Route::get('borrow-leave', [EmployeeLeaveController::class, 'authBarrowLeave']);
     Route::resource('leave', EmployeeLeaveController::class);
     
 });

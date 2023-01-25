@@ -21121,6 +21121,7 @@ __webpack_require__.r(__webpack_exports__);
       errors: [],
       usable: [],
       consumeleave: [],
+      borrowleave: [],
       btncap: "Send",
       leave_types: [],
       leave_type: {},
@@ -21258,7 +21259,7 @@ __webpack_require__.r(__webpack_exports__);
             'des': val.description,
             'num': val.number_of_days
           };
-          _this2.availeave = val.number_of_days - _this2.checkConsume(val.id);
+          _this2.availeave = val.number_of_days - (_this2.checkConsume(val.id) + _this2.checkBorrow(val.id));
         }
       });
     },
@@ -21271,7 +21272,7 @@ __webpack_require__.r(__webpack_exports__);
             'des': vl.description,
             'num': vl.number_of_days
           };
-          _this3.availuse = vl.number_of_days - _this3.checkConsume(vl.id);
+          _this3.availuse = vl.number_of_days - (_this3.checkConsume(vl.id) + _this3.checkBorrow(vl.id));
         }
       });
     },
@@ -21280,6 +21281,15 @@ __webpack_require__.r(__webpack_exports__);
       this.consumeleave.forEach(function (val) {
         if (id == val.leave_type_id) {
           ret += val.leave;
+        }
+      });
+      return ret;
+    },
+    checkBorrow: function checkBorrow(id) {
+      var ret = 0;
+      this.borrowleave.forEach(function (val) {
+        if (id == val.leave_type_id) {
+          ret += val.credits;
         }
       });
       return ret;
@@ -21319,10 +21329,11 @@ __webpack_require__.r(__webpack_exports__);
             _this4.post = {};
             _this4.$emit('show', {
               'message': 'Leave Application sent!',
-              'status': 4
+              'status': 3
             });
             _this4.listLeave();
             _this4.getConsumeLeave();
+            _this4.getBorrowLeave();
             _this4.availeave = 0;
           })["catch"](function (err) {
             _this4.btncap = "Send";
@@ -21408,12 +21419,21 @@ __webpack_require__.r(__webpack_exports__);
           _this7.consumeleave = res.data;
         });
       });
+    },
+    getBorrowLeave: function getBorrowLeave() {
+      var _this8 = this;
+      this.$axios.get('sanctum/csrf-cookie').then(function (response) {
+        _this8.$axios.get('api/borrow-leave').then(function (res) {
+          _this8.borrowleave = res.data;
+        });
+      });
     }
   },
   mounted: function mounted() {
     this.listLeaveType();
     this.listLeave();
     this.getConsumeLeave();
+    this.getBorrowLeave();
     if (window.Laravel.isLoggedin) {
       this.user = window.Laravel.user;
       this.auth = true;
@@ -23256,7 +23276,7 @@ var _hoisted_1 = {
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["fm-content alert alert-dismissible fade show text-center bg-orange", $props.status]),
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["fm-content alert fade show text-center", $props.status]),
     role: "alert"
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.message), 1 /* TEXT */)], 2 /* CLASS */)]);
 }

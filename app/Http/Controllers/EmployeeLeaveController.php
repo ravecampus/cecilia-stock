@@ -148,4 +148,10 @@ class EmployeeLeaveController extends Controller
 
         return response()->json($leave, 200);
     }
+    public function authBarrowLeave(){
+        $leave = BorrowCredit::where('user_id', Auth::id())
+            ->whereYear('created_at', Carbon::now()->format('Y'))->get();
+
+        return response()->json($leave, 200);
+    }
 }
