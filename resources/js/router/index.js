@@ -8,10 +8,17 @@ import AdminPosition from '../admin/Position';
 import Leavetype from '../admin/LeaveType';
 import Users from '../admin/Users';
 import Administrator from '../admin/Administrator';
+import AdminApplication from '../admin/LeaveApplication';
+import AdminViewApp from '../admin/ViewApp';
+
 
 import User from '../user/Mainpage';
 import Profile from '../user/Profile';
 import LeaveApp from '../user/LeaveApplication';
+import LeaveCredit from '../user/LeaveCredit';
+import LeaveHistory from '../user/History';
+import ApprovedLeave from '../user/ApprovedLeave';
+import LeaveStatus from '../user/ApprovedLeave';
 
 export const routes = [
     {
@@ -49,6 +56,16 @@ export const routes = [
                 path: 'administrators',
                 component: Administrator,
             },
+            {
+                name: 'adminleaveapp',
+                path: 'applications',
+                component: AdminApplication,
+            },
+            {
+                name: 'adminviewleave',
+                path: 'view-application/:id',
+                component: AdminViewApp,
+            },
         ]
     },
     {
@@ -65,6 +82,26 @@ export const routes = [
                 name: 'leaveapp',
                 path: 'leave-application',
                 component: LeaveApp,
+            },
+            {
+                name: 'leavecredit',
+                path: 'leave-credits',
+                component: LeaveCredit,
+            },
+            {
+                name: 'leavehistory',
+                path: 'leave-history',
+                component: LeaveHistory,
+            },
+            {
+                name: 'viewleave',
+                path: 'view-leave/:id',
+                component: ApprovedLeave,
+            },
+            {
+                name: 'adminleavestatus',
+                path: 'leave-status',
+                component: LeaveStatus,
             }
         ]
     }
@@ -84,7 +121,11 @@ const openRoutes = [
 const userRoutes = [
     'user',
     'profile',
-    'leaveapp'
+    'leaveapp',
+    'leavecredit',
+    'leavehistory',
+    'viewleave',
+    
    
 ];
 const adminRoutes = [
@@ -94,6 +135,9 @@ const adminRoutes = [
     'adminleavetype',
     'adminusers',
     'administrator',
+    'adminleaveapp',
+    'adminviewleave',
+    'adminleavestatus',
     
 ];
 

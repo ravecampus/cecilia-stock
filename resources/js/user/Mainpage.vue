@@ -1,6 +1,6 @@
 <template>
     	<div class="wrapper">
-		<nav id="sidebar" class="sidebar js-sidebar">
+		<nav id="sidebar" class="sidebar js-sidebar d-print-none">
 			<div class="sidebar-content js-simplebar">
 				<a class="sidebar-brand" href="#">
 					<span class="align-middle">{{ title }}&nbsp;</span>
@@ -33,94 +33,23 @@
 					</li>
 
 					<li class="sidebar-item">
-						<router-link class="sidebar-link" :to="{name:'adminposition'}">
+						<router-link class="sidebar-link" :to="{name:'leavecredit'}">
               				<i class="align-middle" data-feather="clipboard"></i> <span class="align-middle">Leave Credits</span>
 						</router-link>
 					</li>
 
 					<li class="sidebar-item">
-						<router-link class="sidebar-link" :to="{name:'adminleavetype'}">
+						<router-link class="sidebar-link" :to="{name:'leavehistory'}">
 							<i class="align-middle" data-feather="book"></i> <span class="align-middle">History</span>
 						</router-link>
 					</li>
-					<li class="sidebar-item">
-						<router-link class="sidebar-link" :to="{name:'adminusers'}">
-							<i class="align-middle" data-feather="users"></i> <span class="align-middle">Employee Setup</span>
-						</router-link>
-					</li>
-					<li class="sidebar-item">
-						<router-link class="sidebar-link" :to="{name:'administrator'}">
-							<i class="align-middle" data-feather="users"></i> <span class="align-middle">Administrator</span>
-						</router-link>
-					</li>
-
-					<li class="sidebar-header">
-						Tools & Components
-					</li>
-
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="ui-buttons.html">
-              <i class="align-middle" data-feather="square"></i> <span class="align-middle">Buttons</span>
-            </a>
-					</li>
-
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="ui-forms.html">
-              <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Forms</span>
-            </a>
-					</li>
-
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="ui-cards.html">
-              <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Cards</span>
-            </a>
-					</li>
-
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="ui-typography.html">
-              <i class="align-middle" data-feather="align-left"></i> <span class="align-middle">Typography</span>
-            </a>
-					</li>
-
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="icons-feather.html">
-              <i class="align-middle" data-feather="coffee"></i> <span class="align-middle">Icons</span>
-            </a>
-					</li>
-
-					<li class="sidebar-header">
-						Plugins & Addons
-					</li>
-
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="charts-chartjs.html">
-              <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Charts</span>
-            </a>
-					</li>
-
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="maps-google.html">
-              <i class="align-middle" data-feather="map"></i> <span class="align-middle">Maps</span>
-            </a>
-					</li>
 				</ul>
-
-				<div class="sidebar-cta">
-					<div class="sidebar-cta-content">
-						<strong class="d-inline-block mb-2">Upgrade to Pro</strong>
-						<div class="mb-3 text-sm">
-							Are you looking for more components? Check out our premium version.
-						</div>
-						<div class="d-grid">
-							<a href="upgrade-to-pro.html" class="btn btn-primary">Upgrade to Pro</a>
-						</div>
-					</div>
-				</div>
+			
 			</div>
 		</nav>
 
 		<div class="main">
-			<nav class="navbar navbar-expand navbar-light navbar-bg">
+			<nav class="navbar navbar-expand navbar-light navbar-bg d-print-none">
 				<a class="sidebar-toggle js-sidebar-toggle">
           <i class="hamburger align-self-center"></i>
         </a>

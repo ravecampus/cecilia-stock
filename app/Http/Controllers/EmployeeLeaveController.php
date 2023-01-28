@@ -23,13 +23,17 @@ class EmployeeLeaveController extends Controller
         $dir = $request->dir;
         $searchValue = $request->search;
         $query = EmployeeLeave::with('borrow')->where('deleted', 0)
+        ->where('status', '!=', 3)
+        ->where('status', '!=', 4)
+        ->where('status', '!=', 5)
         // ->whereYear('created_at', Carbon::now()->format('Y'))
-        ->orderBy($columns[$column], $dir);
+        ->orderBy('created_at', $dir);
     
         if($searchValue){
             $query->where(function($query) use ($searchValue){
                 $query->where('state_reason', 'like', '%'.$searchValue.'%')
-                ->orWhere('remarks', 'like', '%'.$searchValue.'%');
+                ->orWhere('remarks', 'like', '%'.$searchValue.'%')
+                ->orWhere('ref_number', 'like', '%'.$searchValue.'%');
             });
         }
         $projects = $query->paginate($length);
@@ -80,6 +84,9 @@ class EmployeeLeaveController extends Controller
 
         ]);
 
+        $leave->ref_number ="CSF-".str_pad($leave->id, 6, "0", STR_PAD_LEFT);
+        $leave->save();
+
         if($request->credits > 0){
             $borrow = BorrowCredit::create([
                 'user_id' => Auth::id(),
@@ -100,7 +107,8 @@ class EmployeeLeaveController extends Controller
      */
     public function show($id)
     {
-        //
+        $leave = EmployeeLeave::with('borrow')->find($id);
+        return response()->json($leave, 200);
     }
 
     /**
@@ -153,5 +161,67 @@ class EmployeeLeaveController extends Controller
             ->whereYear('created_at', Carbon::now()->format('Y'))->get();
 
         return response()->json($leave, 200);
+    }
+
+    public function leaveApproved(Request $request){
+        $columns = ['state_reason','date_from','date_to', 'remarks', 'created_at'];
+        $length = $request->length;
+        $column = $request->column;
+        $dir = $request->dir;
+        $searchValue = $request->search;
+        $query = EmployeeLeave::with('borrow')
+        ->where('deleted', 0)
+        ->where('status','>=', 3)
+        // ->whereYear('created_at', Carbon::now()->format('Y'))
+        ->orderBy('created_at', $dir);
+    
+        if($searchValue){
+            $query->where(function($query) use ($searchValue){
+                $query->where('state_reason', 'like', '%'.$searchValue.'%')
+                ->orWhere('remarks', 'like', '%'.$searchValue.'%')
+                ->orWhere('ref_number', 'like', '%'.$searchValue.'%');
+            });
+        }
+        $projects = $query->paginate($length);
+        return ['data'=>$projects, 'draw'=> $request->draw];
+    }
+
+    public function getLeaveNotification(){
+        $leave = EmployeeLeave::with('borrow','user', 'type')
+        ->where('status', 0)
+        ->where('deleted', 0)
+        ->orderBy('created_at', 'desc')->get();
+        return response()->json($leave, 200);
+    }
+
+    public function setReceived(Request $request){
+        $leave = EmployeeLeave::find($request->id);
+        $leave->status = 1;
+        $leave->save();
+        return response()->json($leave, 200);
+    }
+
+    public function application(Request $request){
+
+        $columns = ['state_reason','date_from','date_to', 'remarks', 'created_at'];
+        $length = $request->length;
+        $column = $request->column;
+        $dir = $request->dir;
+        $searchValue = $request->search;
+        $query = EmployeeLeave::with('borrow')
+        ->where('deleted', 0)
+        ->where('status', 1)
+        // ->whereYear('created_at', Carbon::now()->format('Y'))
+        ->orderBy('created_at', $dir);
+    
+        if($searchValue){
+            $query->where(function($query) use ($searchValue){
+                $query->where('state_reason', 'like', '%'.$searchValue.'%')
+                ->orWhere('remarks', 'like', '%'.$searchValue.'%')
+                ->orWhere('ref_number', 'like', '%'.$searchValue.'%');
+            });
+        }
+        $projects = $query->paginate($length);
+        return ['data'=>$projects, 'draw'=> $request->draw];
     }
 }

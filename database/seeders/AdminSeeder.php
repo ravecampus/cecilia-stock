@@ -15,6 +15,26 @@ class AdminSeeder extends Seeder
     public function run()
     {
 
+        DB::table('leave_type')->delete();
+        DB::table('leave_type')->insert([
+            'id' => 1,
+            'description'=>'Sick Leave', 
+            'number_of_days'=> 5, 
+            'usable'=> 1, 
+        ]);
+        DB::table('leave_type')->insert([
+            'id' => 1,
+            'description'=>'Vacation Leave', 
+            'number_of_days'=> 5, 
+            'usable'=> 1, 
+        ]);
+        DB::table('leave_type')->insert([
+            'id' => 1,
+            'description'=>'Emergency', 
+            'number_of_days'=> 5, 
+            'usable'=> 1, 
+        ]);
+
         DB::table('users')->delete();
         DB::table('users')->insert([
             'id' => 1,

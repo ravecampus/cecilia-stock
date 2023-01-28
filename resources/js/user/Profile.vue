@@ -25,7 +25,7 @@
                             <!-- <a class="btn btn-primary btn-sm" href="#"><span data-feather="message-square"></span> Message</a> -->
                         </div>
                     </div>
-                    <hr class="my-0" />
+                    <!-- <hr class="my-0" />
                     <div class="card-body">
                         <h5 class="h6 card-title">Skills</h5>
                         <a href="#" class="badge bg-primary me-1 my-1">HTML</a>
@@ -58,7 +58,7 @@
                             <li class="mb-1"><a href="#">Instagram</a></li>
                             <li class="mb-1"><a href="#">LinkedIn</a></li>
                         </ul>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
@@ -157,7 +157,7 @@
                             </div>
                         </div>
 
-                        <hr />
+                        <!-- <hr />
                         <div class="d-flex align-items-start">
                             <img src="img/avatars/avatar.jpg" width="36" height="36" class="rounded-circle me-2" alt="Charles Hall">
                             <div class="flex-grow-1">
@@ -177,7 +177,7 @@
                         <hr />
                         <div class="d-grid">
                             <a href="#" class="btn btn-primary" >Load more</a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

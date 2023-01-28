@@ -12,6 +12,7 @@ class EmployeeLeave extends Model
     protected $table = 'employee_leave';
 
     protected $fillable = [
+        'ref_number', 
         'leave_type_id', 
         'user_id', 
         'state_reason',
@@ -26,5 +27,13 @@ class EmployeeLeave extends Model
     public function borrow()
     {
         return $this->hasOne(BorrowCredit::class, 'employee_leave_id', 'id');
+    }
+
+    public function user(){
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    public function type(){
+        return $this->hasOne(Leavetype::class, 'id', 'leave_type_id');
     }
 }

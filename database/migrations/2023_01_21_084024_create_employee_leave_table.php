@@ -15,6 +15,7 @@ class CreateEmployeeLeaveTable extends Migration
     {
         Schema::create('employee_leave', function (Blueprint $table) {
             $table->id();
+            $table->string('ref_number')->nullable();
             $table->integer('leave_type_id')->nullable();
             $table->integer('user_id')->nullable();
             $table->text('state_reason')->nullable();
@@ -26,6 +27,7 @@ class CreateEmployeeLeaveTable extends Migration
             $table->text('remarks')->nullable();
             $table->integer('status')->default(0);
             $table->integer('deleted')->default(0);
+            $table->integer('approver')->nullable();
             $table->timestamps();
         });
     }

@@ -26,7 +26,7 @@
                             <textarea class="form-control" v-model="post.state_reason" placeholder="State Reason"></textarea>
                             <span class="errors-material" v-if="errors.state_reason">{{errors.state_reason[0]}}</span>
                         </div>
-                        <small>Duration of Leave</small> <span class="bg-success p-1 text-white">{{ post.number_of_days }}</span>
+                        <small>Duration of Leave</small> <span class="bg-success p-1 text-white" v-if="post.number_of_days > 0">{{ post.number_of_days }}</span>
                         <hr class="mt-0">
                         <div class="row mb-3">
                             <div class="form-group col-md-4 pr-0">
@@ -131,29 +131,29 @@
                         <data-table class="mt-5" :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
                             <tbody class="">
                                 <tr class="shadow-sm p-3 m-2"  v-for="(list) in leaves" :key="list.id">
-                                    <td><strong class="text-success">{{ extractLeaveType(list.leave_type_id) }}</strong>
-                                    </td>
+                                    <td><strong class="text-primary">{{ list.ref_number }}</strong></td>
+                                    <td><strong class="text-success">{{ extractLeaveType(list.leave_type_id) }}</strong></td>
                                     <td><span class="status--process">{{ list.state_reason }}</span></td>
                                     <td>
-                                        <small>{{ formatDate(list.date_from)+" "+extractExt(list.ext_from) }} - {{ formatDate(list.date_to)+" "+extractExt(list.ext_to) }}</small>
+                                        <strong>{{ formatDate(list.date_from)+" "+extractExt(list.ext_from) }} - {{ formatDate(list.date_to)+" "+extractExt(list.ext_to) }}</strong>
                                         <hr class="mt-0">
-                                        <span><strong class="text-primary">{{ list.leave }}</strong></span>
-                                        <div v-if="list.borrow != null"><i class="text-success" > consume credits from {{ extractLeaveType(list.borrow.leave_type_id) }} is {{ list.borrow.credits }}</i></div>
+                                        <span><strong class="text-primary">{{ list.leave }}  days</strong></span>
+                                        <div v-if="list.borrow != null"><i class="text-success" > consume credits from {{ extractLeaveType(list.borrow.leave_type_id) }} is</i> <strong>{{ list.borrow.credits }} day/s</strong></div>
                                         <hr class="m-0">
-                                        <div v-if="list.borrow != null" class="">Total of : {{ list.leave + list.borrow.credits }}</div>
+                                        <div v-if="list.borrow != null" class="">Total of : <strong>{{ list.leave + list.borrow.credits }}</strong></div>
                                     </td>
                                     <td><span>{{ list.remarks }}</span></td>
                                     <td><span class="text-muted">{{ extractStatus(list.status) }}</span></td>
                                     <td><span class="text-muted">{{ formatDate(list.created_at) }}</span></td>
                                     <td>                                           
-                                        <button class="btn btn-danger btn-sm " data-toggle="tooltip" @click="cancelRequest(list)" title="Edit">
+                                        <button class="btn btn-danger btn-sm" v-if="list.status == 0" data-toggle="tooltip" @click="cancelRequest(list)" title="Edit">
                                             <i class="fa fa-close"></i> Cancel
                                         </button>
                                         
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="7" v-show="!noData(leaves)">
+                                    <td colspan="8" v-show="!noData(leaves)">
                                         No Result Found!
                                     </td>
                                 </tr>
@@ -234,13 +234,14 @@ export default {
     data(){
         let sortOrders = {};
         let columns =[
-        {label:'Leave Type', name:null},
-        {label:'Reason', name:null},
-        {label:'Duration', name:null},
-        {label:'Remarks', name:null},
-        {label:'Status', name:null},
-        {label:'Date File', name:null},
-        {label:'Action ', name:null},
+        {label:'REF. #', name:null},
+        {label:'LEAVE TYPE', name:null},
+        {label:'REASON', name:null},
+        {label:'DURATION', name:null},
+        {label:'REMARKS', name:null},
+        {label:'STATUS', name:null},
+        {label:'DATE FILED', name:null},
+        {label:'ACTION ', name:null},
         ];
         
         columns.forEach(column=>{
@@ -264,7 +265,7 @@ export default {
             borrow:{},
             columns:columns,
             sortOrders:sortOrders,
-            sortKey:'created_at',
+            sortKey:'id',
             tableData:{
                 draw:0,
                 length:10,
@@ -511,7 +512,7 @@ export default {
             return data == undefined ? true : (data.length > 0) ? true : false;
         },
         extractStatus(id){
-            return id == 0 ? "Pending" : "Approved"
+            return id == 0 ? "Sent" : (id==1) ? "Received" :(id == 2) ? "Approved" :"Denied";
         },
         extractExt(num){
             return num == 1 ? "AM" : "PM";
