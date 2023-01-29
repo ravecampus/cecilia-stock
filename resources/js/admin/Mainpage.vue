@@ -25,7 +25,7 @@
 					</li>
 					<li class="sidebar-item">
 						<router-link class="sidebar-link" :to="{'name':'adminleaveapp'}">
-							<i class="align-middle" data-feather="file"></i> <span class="align-middle">LA Status</span>
+							<i class="align-middle" data-feather="file-text"></i> <span class="align-middle">LA Status</span>
 						</router-link>
 					</li>
 					<li class="sidebar-header">
@@ -170,14 +170,18 @@
               				</a>
 
 							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                                <img :src="'../img/profile.png'" class="avatar img-fluid rounded me-1" /> <span class="text-dark">{{ user.first_name+" "+user.last_name }}</span>								
-              				</a>
+                                <img :src="'/../img/profile.png'" class="avatar img-fluid rounded me-1" /> 
+								<span class="text-dark">{{ user.first_name+" "+user.last_name }}	
+								</span>								
+								
+							  </a>
 							<div class="dropdown-menu dropdown-menu-end">
-								<a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
-								<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i> Analytics</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="index.html"><i class="align-middle me-1" data-feather="settings"></i> Settings & Privacy</a>
-								<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i> Help Center</a>
+								
+								<div class="p-2">
+									<span class="text-dark">{{ user.first_name+" "+user.last_name }}	
+									</span>	
+									<div class="small">{{ user.role == 1 ? "Supervisor" : "HR"}}</div>
+								</div>
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" @click="logout()" href="#">Log out</a>
 							</div>

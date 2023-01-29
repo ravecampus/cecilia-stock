@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body shadow">
                         <input type="text" class="form-control" v-model="tableData.search"  @input="listLeave()" placeholder="Search....">
                         <hr>
                         <data-table class="mt-5" :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">

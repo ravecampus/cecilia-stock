@@ -107,7 +107,7 @@ class EmployeeLeaveController extends Controller
      */
     public function show($id)
     {
-        $leave = EmployeeLeave::with('borrow')->find($id);
+        $leave = EmployeeLeave::with('borrow','user','type')->find($id);
         return response()->json($leave, 200);
     }
 
