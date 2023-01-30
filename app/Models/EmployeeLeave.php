@@ -21,7 +21,11 @@ class EmployeeLeave extends Model
         'date_to',
         'ext_to',
         'remarks',
-        'leave'
+        'leave',
+        'approver',
+        'feedback',
+        'approve_date',
+
     ];
 
     public function borrow()
@@ -35,6 +39,9 @@ class EmployeeLeave extends Model
 
     public function type(){
         return $this->hasOne(Leavetype::class, 'id', 'leave_type_id');
+    }
+    public function approvern(){
+        return $this->hasOne(User::class, 'id', 'approver');
     }
     
 }

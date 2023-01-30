@@ -194,7 +194,7 @@
                         </a>
 
                             <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                                <img :src="'../img/profile.png'" class="avatar img-fluid rounded me-1" /> <span class="text-dark">{{ user.first_name+" "+user.last_name }}</span>
+                                <img :src="'/../img/profile.png'" class="avatar img-fluid rounded me-1" /> <span class="text-dark">{{ user.first_name+" "+user.last_name }}</span>
                             </a>
 							<div class="dropdown-menu dropdown-menu-end">
 								<router-link class="dropdown-item" :to="{name:'profile'}"><i class="align-middle me-1" data-feather="user"></i> Profile</router-link>

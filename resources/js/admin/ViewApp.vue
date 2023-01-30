@@ -54,18 +54,67 @@
                             </div>
                             <div class="col-md-12">
                                 <label>Feedback: </label>&nbsp;
-                                <textarea class="form-control" placeholder="Enter Feedback..."></textarea>
+                                <textarea class="form-control" v-model="post.feedback" placeholder="Enter Feedback..."></textarea>
+                                <span class="errors-material" v-if="errors.feedback">{{errors.feedback[0]}}</span>
                             </div>
                            
                         </div>
                         <div class="btn-group">
-                            <button type="button" class="btn btn-success">Approve</button>
-                            <button type="button" class="btn btn-danger">Deny</button>
+                            <button type="button" @click="showModalApp()" class="btn btn-success">Approve</button>
+                            <button type="button" @click="showModalDeny()" class="btn btn-danger">Deny</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+      
+        <div class="modal fade approve-leave">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h6>Cancel Leave Request</h6>
+                </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <strong>Do you want to Approved this Leave Application?</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer text-center">
+                        <div class="btn-group">
+                            <button type="button" @click="changeStatus(2)" class="btn btn-success">Yes</button>
+                            <button type="button" @click="cancel()" class="btn btn-secondary">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade deny-leave">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h6>Cancel Leave Request</h6>
+                </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <strong>Do you want to Deny this Leave Application?</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer text-center">
+                        <div class="btn-group">
+                            <button type="button" @click="changeStatus(3)" class="btn btn-danger">Yes</button>
+                            <button type="button" @click="cancel()" class="btn btn-secondary">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -78,9 +127,41 @@ export default {
             position:{},
             leave_type:{},
             borrow:{},
+            post:{},
+            errors:[],
         }
     },
     methods: {
+        showModalApp(){
+            $('.approve-leave').modal('show');
+        },
+        showModalDeny(){
+            $('.deny-leave').modal('show');
+        },
+        cancel(){
+            $('.approve-leave').modal("hide"); 
+            $('.deny-leave').modal("hide"); 
+        },
+        changeStatus(num){
+            this.post.id = this.leave.id;
+            this.post.status = num;
+
+            this.$axios.get('sanctum/csrf-cookie').then(response=>{
+                this.$axios.post('api/leave-status/',this.post).then(res=>{
+                    this.post = {};
+                    if(num == 2){
+                        this.$emit('show',{'message':'Leave Application has been approved!', 'status':4});
+                    }else{
+                        this.$emit('show',{'message':'Leave Application has been denied!', 'status':4});
+                    }
+                    this.router.push({name:''});
+                    this.cancel();
+                }).catch(err=>{
+                    this.cancel();
+                    this.errors = err.response.data.errors
+                });
+            });
+       },
        getEmoloyeeLeave(id){
             this.$axios.get('sanctum/csrf-cookie').then(response=>{
                 this.$axios.get('api/leave/'+id).then(res=>{

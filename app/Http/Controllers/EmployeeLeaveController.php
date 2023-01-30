@@ -23,9 +23,9 @@ class EmployeeLeaveController extends Controller
         $dir = $request->dir;
         $searchValue = $request->search;
         $query = EmployeeLeave::with('borrow')->where('deleted', 0)
+        ->where('user_id', Auth::id())
+        ->where('status', '!=', 2)
         ->where('status', '!=', 3)
-        ->where('status', '!=', 4)
-        ->where('status', '!=', 5)
         // ->whereYear('created_at', Carbon::now()->format('Y'))
         ->orderBy('created_at', $dir);
     
@@ -107,7 +107,7 @@ class EmployeeLeaveController extends Controller
      */
     public function show($id)
     {
-        $leave = EmployeeLeave::with('borrow','user','type')->find($id);
+        $leave = EmployeeLeave::with('borrow','user','type', 'approvern')->find($id);
         return response()->json($leave, 200);
     }
 
@@ -169,9 +169,10 @@ class EmployeeLeaveController extends Controller
         $column = $request->column;
         $dir = $request->dir;
         $searchValue = $request->search;
-        $query = EmployeeLeave::with('borrow')
+        $query = EmployeeLeave::with('borrow', 'approvern')
         ->where('deleted', 0)
-        ->where('status','>=', 3)
+        ->where('status','>=', 2)
+        ->where('user_id', Auth::id())
         // ->whereYear('created_at', Carbon::now()->format('Y'))
         ->orderBy('created_at', $dir);
     
@@ -200,7 +201,7 @@ class EmployeeLeaveController extends Controller
         $leave->save();
         return response()->json($leave, 200);
     }
-
+    // admin side
     public function application(Request $request){
 
         $columns = ['state_reason','date_from','date_to', 'remarks', 'created_at'];

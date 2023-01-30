@@ -59,13 +59,16 @@
                           
 
                         </ul>
-                             <div v-if="employee_leave.status == 3">
-                                Approved by : {{ employee_leave.approver }}
+                             <div v-if="employee_leave.status == 2">
+                                Approved by : {{ employee_leave.approvern.first_name }} {{ employee_leave.approvern.last_name }}
+                            </div>
+                             <div v-if="employee_leave.status == 2">
+                                Feedback : {{ employee_leave.feedback }}
                             </div>
                         <hr>
                         <div>
                                Status: 
-                               <small>{{ formatDate(employee_leave.updated_at) }}</small>
+                               <small>{{ formatDate(employee_leave.approve_date) }}</small>
                                <h3 class="text-success">{{ extractStatus(employee_leave.status) }}</h3>
                         </div>
                     </div>

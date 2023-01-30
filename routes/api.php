@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdministratorController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployeeLeaveController;
+use App\Http\Controllers\ApproverController;
 
 
 /*
@@ -26,6 +27,7 @@ Route::post('signin',[AuthController::class, 'signin']);
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::post('leave-status', [ApproverController::class, 'changeStatus']);
     Route::get('list-department', [DepartmentController::class, 'listDepartment']);
     Route::resource('administrator', AdministratorController::class);
     Route::resource('department', DepartmentController::class);

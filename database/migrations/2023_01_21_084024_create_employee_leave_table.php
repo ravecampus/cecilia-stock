@@ -28,6 +28,8 @@ class CreateEmployeeLeaveTable extends Migration
             $table->integer('status')->default(0);
             $table->integer('deleted')->default(0);
             $table->integer('approver')->nullable();
+            $table->text('feedback')->nullable();
+            $table->date('approve_date')->nullable();
             $table->timestamps();
         });
     }
