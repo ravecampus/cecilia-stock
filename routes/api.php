@@ -27,6 +27,7 @@ Route::post('signin',[AuthController::class, 'signin']);
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('applications-status', [ApproverController::class,'leaveStatus']);
     Route::post('leave-status', [ApproverController::class, 'changeStatus']);
     Route::get('list-department', [DepartmentController::class, 'listDepartment']);
     Route::resource('administrator', AdministratorController::class);

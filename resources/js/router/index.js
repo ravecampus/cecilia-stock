@@ -10,7 +10,7 @@ import Users from '../admin/Users';
 import Administrator from '../admin/Administrator';
 import AdminApplication from '../admin/LeaveApplication';
 import AdminViewApp from '../admin/ViewApp';
-
+import LeaveStatus from '../admin/LeaveStatus';
 
 import User from '../user/Mainpage';
 import Profile from '../user/Profile';
@@ -18,7 +18,7 @@ import LeaveApp from '../user/LeaveApplication';
 import LeaveCredit from '../user/LeaveCredit';
 import LeaveHistory from '../user/History';
 import ApprovedLeave from '../user/ApprovedLeave';
-import LeaveStatus from '../user/ApprovedLeave';
+
 
 export const routes = [
     {
@@ -66,6 +66,11 @@ export const routes = [
                 path: 'view-application/:id',
                 component: AdminViewApp,
             },
+            {
+                name: 'adminleavestatus',
+                path: 'leave-status',
+                component: LeaveStatus,
+            }
         ]
     },
     {
@@ -98,11 +103,7 @@ export const routes = [
                 path: 'view-leave/:id',
                 component: ApprovedLeave,
             },
-            {
-                name: 'adminleavestatus',
-                path: 'leave-status',
-                component: LeaveStatus,
-            }
+           
         ]
     }
 

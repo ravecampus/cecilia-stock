@@ -52,16 +52,22 @@
                                 <label>Remarks: </label>&nbsp;
                                 <span class="h4"> {{ leave.remarks }} day/s</span>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12" v-if="leave.status == 1">
                                 <label>Feedback: </label>&nbsp;
                                 <textarea class="form-control" v-model="post.feedback" placeholder="Enter Feedback..."></textarea>
                                 <span class="errors-material" v-if="errors.feedback">{{errors.feedback[0]}}</span>
                             </div>
+                            <div class="col-md-12">
+                                <small>Status:</small>
+                                <h4 :class="leave.status == 2 ? 'text-success':'text-danger'">{{ extractStatus(leave.status) }} by {{ leave.approvern.first_name }}  {{ leave.approvern.last_name }}</h4>
+                                <p>{{ leave.feedback }}</p> 
+                            </div>
                            
                         </div>
-                        <div class="btn-group">
+                        <div class="btn-group"  v-if="leave.status == 1">
                             <button type="button" @click="showModalApp()" class="btn btn-success">Approve</button>
                             <button type="button" @click="showModalDeny()" class="btn btn-danger">Deny</button>
+                                                
                         </div>
                     </div>
                 </div>
@@ -154,7 +160,7 @@ export default {
                     }else{
                         this.$emit('show',{'message':'Leave Application has been denied!', 'status':4});
                     }
-                    this.router.push({name:''});
+                    this.router.push({name:'adminleavestatus'});
                     this.cancel();
                 }).catch(err=>{
                     this.cancel();
@@ -182,6 +188,9 @@ export default {
         },
         extractExt(num){
             return num == 1 ? "AM" : "PM";
+        },
+        extractStatus(id){
+            return id == 0 ? "Sent" : (id==1) ? "Received" :(id == 2) ? "Approved" :"Denied";
         },
     },
     mounted() {

@@ -42,9 +42,7 @@
                                     No Result Found!
                                 </td>
                             </tr>
-
                             <tr class="spacer"></tr>
-                            
                         </tbody>
                     </data-table>
                     <div class="pull-right">
@@ -185,7 +183,6 @@ export default {
                     }).catch(err=>{
                         this.btncap = "Save";
                         this.errors = err.response.data.errors
-
                     });
                 });
             }
