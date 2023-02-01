@@ -54,4 +54,15 @@ class User extends Authenticatable
     public function position(){
         return $this->hasOne(Position::class, 'id', 'position_id');
     }
+    public function department(){
+        return $this->hasOne(Department::class, 'id', 'department_id');
+    }
+
+    public function leave(){
+        return $this->hasMany(EmployeeLeave::class, 'user_id', 'id')->where('deleted', 0);
+    }
+
+    public function borrow(){
+        return $this->hasMany(BorrowCredit::class, 'user_id', 'id');
+    }
 }

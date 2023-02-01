@@ -1,6 +1,6 @@
 <template>
     	<div class="wrapper">
-		<nav id="sidebar" class="sidebar js-sidebar">
+		<nav id="sidebar" class="sidebar js-sidebar d-print-none">
 			<div class="sidebar-content js-simplebar">
 				<a class="sidebar-brand" href="#">
 					<span class="align-middle">{{ title }}&nbsp;</span>
@@ -13,9 +13,9 @@
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="index.html">
+						<router-link class="sidebar-link" :to="{name:'admindashboard'}">
 							<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
-						</a>
+						</router-link>
 					</li>
 
 					<li class="sidebar-item">
@@ -25,11 +25,11 @@
 					</li>
 					<li class="sidebar-item">
 						<router-link class="sidebar-link" :to="{'name':'adminleavestatus'}">
-							<i class="align-middle" data-feather="file-text"></i> <span class="align-middle">LA Status</span>
+							<i class="align-middle" data-feather="file-text"></i> <span class="align-middle">L.A. Status</span>
 						</router-link>
 					</li>
 					<li class="sidebar-header">
-						Page Setup
+						Settings
 					</li>
 					<li class="sidebar-item">
 						<router-link class="sidebar-link" :to="{name:'admindepartment'}">
@@ -73,7 +73,7 @@
 		</nav>
 
 		<div class="main">
-			<nav class="navbar navbar-expand navbar-light navbar-bg">
+			<nav class="navbar navbar-expand navbar-light navbar-bg d-print-none">
 				<a class="sidebar-toggle js-sidebar-toggle">
           <i class="hamburger align-self-center"></i>
         </a>
@@ -153,7 +153,7 @@
 						</div>
 						<div class="col-6 text-end">
 							<ul class="list-inline">
-								<li class="list-inline-item">
+								<!-- <li class="list-inline-item">
 									<a class="text-muted" href="https://adminkit.io/" target="_blank">Support</a>
 								</li>
 								<li class="list-inline-item">
@@ -164,7 +164,7 @@
 								</li>
 								<li class="list-inline-item">
 									<a class="text-muted" href="https://adminkit.io/" target="_blank">Terms</a>
-								</li>
+								</li> -->
 							</ul>
 						</div>
 					</div>

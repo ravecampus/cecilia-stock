@@ -7,10 +7,12 @@ import Department from '../admin/Department';
 import AdminPosition from '../admin/Position';
 import Leavetype from '../admin/LeaveType';
 import Users from '../admin/Users';
+import UserInfo from '../admin/UserInfo';
 import Administrator from '../admin/Administrator';
 import AdminApplication from '../admin/LeaveApplication';
 import AdminViewApp from '../admin/ViewApp';
 import LeaveStatus from '../admin/LeaveStatus';
+import AdminDashboard from '../admin/Dashboard';
 
 import User from '../user/Mainpage';
 import Profile from '../user/Profile';
@@ -32,6 +34,11 @@ export const routes = [
         component: Admin,
         children:[
             {
+                name: 'admindashboard',
+                path: '',
+                component: AdminDashboard,
+            },
+            {
                 name: 'admindepartment',
                 path: 'department',
                 component: Department,
@@ -50,6 +57,11 @@ export const routes = [
                 name: 'adminusers',
                 path: 'employees',
                 component: Users,
+            },
+            {
+                name: 'adminuser',
+                path: 'employee/:id',
+                component: UserInfo,
             },
             {
                 name: 'administrator',
@@ -135,10 +147,12 @@ const adminRoutes = [
     'adminposition',
     'adminleavetype',
     'adminusers',
+    'adminuser',
     'administrator',
     'adminleaveapp',
     'adminviewleave',
     'adminleavestatus',
+    'admindashboard',
     
 ];
 

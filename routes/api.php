@@ -10,6 +10,7 @@ use App\Http\Controllers\AdministratorController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployeeLeaveController;
 use App\Http\Controllers\ApproverController;
+use App\Http\Controllers\DashboardController;
 
 
 /*
@@ -27,6 +28,10 @@ Route::post('signin',[AuthController::class, 'signin']);
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->group(function () {
+    
+    Route::get('levstat-count', [DashboardController::class,'adminLeaveStatus']);
+    Route::get('lev-count', [DashboardController::class,'adminLeaveApp']);
+    Route::get('emp-count', [DashboardController::class,'adminDashEmployee']);
     Route::get('applications-status', [ApproverController::class,'leaveStatus']);
     Route::post('leave-status', [ApproverController::class, 'changeStatus']);
     Route::get('list-department', [DepartmentController::class, 'listDepartment']);

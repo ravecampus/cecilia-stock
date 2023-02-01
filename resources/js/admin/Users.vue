@@ -26,9 +26,11 @@
                         <tbody>
                             <tr class="tr-shadow" v-for="(list, idx) in users" :key="idx">
                                 <td class="text-primary">
-                                    <strong>{{ list.last_name }}, {{list.first_name}} {{ list.middle_name }}
-                                    </strong>
-                                    </td>
+                                    <router-link :to="{name:'adminuser', params:{'id':list.id}}">
+                                        <strong>{{ list.last_name }}, {{list.first_name}} {{ list.middle_name }}
+                                        </strong>
+                                    </router-link>
+                                </td>
                                 <td class="desc">{{ extractGender(list.gender) }}</td>
                                 <td class="desc">{{ list.department }}</td>
                                 <td class="desc">{{ list.position }}</td>
