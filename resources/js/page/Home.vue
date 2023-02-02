@@ -84,7 +84,7 @@ export default {
                     if(data.role == 1 ||data.role == 2){
                         window.location.href="/admin"
                     }else{
-                        window.location.href="/"
+                        window.location.href="/user"
                     }
                   
                 }).catch(err=>{

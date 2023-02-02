@@ -31,6 +31,7 @@
                                         </strong>
                                     </router-link>
                                 </td>
+                                <td class="desc">{{ list.username }}</td>
                                 <td class="desc">{{ extractGender(list.gender) }}</td>
                                 <td class="desc">{{ list.department }}</td>
                                 <td class="desc">{{ list.position }}</td>
@@ -38,7 +39,7 @@
                                 <td>
                                     <div class="table-data-feature">
                                         <button class="btn btn-success btn-sm" @click="changePassword(list)" data-toggle="tooltip" title="Change Password">
-                                            <i class="fa fa-asterisk"></i> Change Password
+                                            <i class="fa fa-asterisk"></i> Password
                                         </button>
                                         <button class="btn btn-warning btn-sm" data-toggle="tooltip" @click="editUser(list)" title="Edit">
                                             <i class="fa fa-pencil"></i> Edit
@@ -220,7 +221,8 @@ export default {
         let sortOrders = {};
         let columns =[
         {label:'Name', name:'last_name'},
-        {label:'Gender', name:'gender'},
+        {label:'Username', name:null},
+        {label:'Gender', name:null},
         {label:'Department', name:'department'},
         {label:'Position', name:'position'},
         {label:'Date Created', name:null},

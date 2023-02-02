@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\BorrowCredit;
 use App\Models\EmployeeLeave;
+use App\Models\EmpNotification;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
@@ -18,7 +19,15 @@ class ApproverController extends Controller
         $leave->feedback = $request->feedback;
         $leave->approver = Auth::id();
         $leave->approve_date = Carbon::now()->format('Y-m-d');
-        $leave->save();
+        if($leave->save()){
+            EmpNotification::create([
+                'user_id' => $leave->user_id,
+                'employee_leave_id' => $leave->id,
+                'leave_type_id' => $leave->leave_type_id,
+                'notify' => 0
+                ]);
+        }
+
         return response()->json($leave, 200);
     }
 
@@ -44,5 +53,20 @@ class ApproverController extends Controller
         }
         $projects = $query->paginate($length);
         return ['data'=>$projects, 'draw'=> $request->draw];
+    }
+
+    public function getEmployeeNotification(){
+        $notify = EmpNotification::with('leave','user', 'type')
+        ->where('user_id', Auth::id())
+        ->where('notify',0)
+        ->orderBy('created_at', 'desc')->get();
+        return response()->json($notify, 200);
+    }
+
+    public function changeNotify(Request $request){
+        $notify = EmpNotification::find($request->id);
+        $notify->notify = 1;
+        $notify->save();
+        return response()->json($notify, 200);
     }
 }

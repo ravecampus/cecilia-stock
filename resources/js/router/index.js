@@ -13,6 +13,7 @@ import AdminApplication from '../admin/LeaveApplication';
 import AdminViewApp from '../admin/ViewApp';
 import LeaveStatus from '../admin/LeaveStatus';
 import AdminDashboard from '../admin/Dashboard';
+import Report from '../admin/Report';
 
 import User from '../user/Mainpage';
 import Profile from '../user/Profile';
@@ -20,6 +21,7 @@ import LeaveApp from '../user/LeaveApplication';
 import LeaveCredit from '../user/LeaveCredit';
 import LeaveHistory from '../user/History';
 import ApprovedLeave from '../user/ApprovedLeave';
+import Homed from '../user/Home';
 
 
 export const routes = [
@@ -82,6 +84,11 @@ export const routes = [
                 name: 'adminleavestatus',
                 path: 'leave-status',
                 component: LeaveStatus,
+            },
+            {
+                name: 'adminreport',
+                path: 'report',
+                component: Report,
             }
         ]
     },
@@ -94,6 +101,11 @@ export const routes = [
                 name: 'profile',
                 path: 'profile',
                 component: Profile,
+            },
+            {
+                name: 'homed',
+                path: '',
+                component: Homed,
             },
             {
                 name: 'leaveapp',
@@ -138,7 +150,7 @@ const userRoutes = [
     'leavecredit',
     'leavehistory',
     'viewleave',
-    
+    'homed'
    
 ];
 const adminRoutes = [
@@ -153,6 +165,7 @@ const adminRoutes = [
     'adminviewleave',
     'adminleavestatus',
     'admindashboard',
+    'adminreport'
     
 ];
 

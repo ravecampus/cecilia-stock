@@ -25,7 +25,7 @@
                                         <div v-if="list.borrow != null" class="">Total of : <strong>{{ list.leave + list.borrow.credits }}</strong></div>
                                     </td>
                                     <!-- <td><span>{{ list.remarks }}</span></td> -->
-                                    <td><span class="text-muted"> <strong>{{ extractStatus(list.status) }}</strong></span></td>
+                                    <td><span :class="list.status == 2 ? 'text-success' :'text-danger'"> <strong>{{ extractStatus(list.status) }}</strong></span></td>
                                     <td><span class="text-muted">{{ formatDate(list.updated_at) }}</span></td>
                                     <td>                                           
                                         <button class="btn btn-success btn-sm" data-toggle="tooltip" @click="viewLeaveApp(list)" title="View">

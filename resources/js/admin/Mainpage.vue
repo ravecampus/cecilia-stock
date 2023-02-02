@@ -64,9 +64,9 @@
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="ui-buttons.html">
+						<router-link class="sidebar-link" :to="{name:'adminreport'}">
              		    	<i class="align-middle" data-feather="square"></i> <span class="align-middle">Report</span>
-            			</a>
+						</router-link>
 					</li>			
 				</ul>
 			</div>
@@ -88,8 +88,8 @@
 								</div>
 							</a>
 							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
-								<div class="dropdown-menu-header">
-									<span v-if="notes.length > 0">{{ notes.length }}</span> New Notifications
+								<div class="dropdown-menu-header" v-if="notes.length > 0">
+									<span>{{ notes.length }}</span> New Notifications
 								</div>
 								<div class="list-group">
 									<a href="#" class="list-group-item" v-for="(list, idx) in notes" :key="idx" @click="receivedNotification(list)">
@@ -100,14 +100,18 @@
 											<div class="col-10">
 												<div class="text-dark"><strong>{{ list.ref_number }}</strong></div>
 												<div class="text-muted small mt-1">{{ list.user.first_name }} {{ list.user.last_name }}</div>
-												<div class="text-success small mt-1"><strong> {{ list.type.description }}</strong></div>
+												<div class="text-success small mt-1 d-flex justify-content-between"><strong> {{ list.type.description }}</strong>
+												<small>
+													<timeago :datetime="list.created_at"/>
+												</small>
+												</div>
 											</div>
 										</div>
 									</a>
 								
 								</div>
 								<div class="dropdown-menu-footer">
-									<div class="text-muted">notifications</div>
+									<div class="text-muted">Notifications</div>
 								</div>
 							</div>
 						</li>

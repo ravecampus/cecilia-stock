@@ -59,17 +59,20 @@
                           
 
                         </ul>
-                             <div v-if="employee_leave.status == 2">
-                                Approved by : {{ employee_leave.approvern.first_name }} {{ employee_leave.approvern.last_name }}
+                            <div v-if="employee_leave.status == 3">
+                                Denied by : {{ employee_leave.approvern.first_name }} {{ employee_leave.approvern.last_name }} <small>({{ employee_leave.approvern.role == 1 ? "Supervisor" : "HR"}})</small>
                             </div>
                              <div v-if="employee_leave.status == 2">
+                                Approved by : {{ employee_leave.approvern.first_name }} {{ employee_leave.approvern.last_name }} <small>({{ employee_leave.approvern.role == 1 ? "Supervisor" : "HR"}})</small>
+                            </div>
+                             <div v-if="employee_leave.status >= 2">
                                 Feedback : {{ employee_leave.feedback }}
                             </div>
                         <hr>
                         <div>
                                Status: 
                                <small>{{ formatDate(employee_leave.approve_date) }}</small>
-                               <h3 class="text-success">{{ extractStatus(employee_leave.status) }}</h3>
+                               <h3 :class="employee_leave.status == 2 ? 'text-success' :'text-danger'">{{ extractStatus(employee_leave.status) }}</h3>
                         </div>
                     </div>
                 </div>

@@ -57,9 +57,9 @@
                                 <textarea class="form-control" v-model="post.feedback" placeholder="Enter Feedback..."></textarea>
                                 <span class="errors-material" v-if="errors.feedback">{{errors.feedback[0]}}</span>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12" v-if="leave.status != 1">
                                 <small>Status:</small>
-                                <h4 :class="leave.status == 2 ? 'text-success':'text-danger'">{{ extractStatus(leave.status) }} by {{ leave.approvern.first_name }}  {{ leave.approvern.last_name }}</h4>
+                                <h4 :class="leave.status == 2 ? 'text-success':'text-danger'">{{ extractStatus(leave.status) }} by {{ leave.approvern.first_name }}  {{ leave.approvern.last_name }} <small>({{ leave.approvern.role == 1 ? "Supervisor" : "HR"}})</small> </h4>
                                 <p>{{ leave.feedback }}</p> 
                             </div>
                            
@@ -157,10 +157,10 @@ export default {
                     this.post = {};
                     if(num == 2){
                         this.$emit('show',{'message':'Leave Application has been approved!', 'status':4});
-                    }else{
+                   }else{
                         this.$emit('show',{'message':'Leave Application has been denied!', 'status':4});
                     }
-                    this.router.push({name:'adminleavestatus'});
+                    this.$router.push({name:'adminleavestatus'});
                     this.cancel();
                 }).catch(err=>{
                     this.cancel();
