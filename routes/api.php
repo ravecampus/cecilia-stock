@@ -11,6 +11,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployeeLeaveController;
 use App\Http\Controllers\ApproverController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ReportController;
 
 
 /*
@@ -29,6 +30,7 @@ Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanct
 
 Route::middleware('auth:sanctum')->group(function () {
 
+    Route::get('report', [ReportController::class,'leaveReport']);
     Route::post('change-notify', [ApproverController::class,'changeNotify']);
     Route::get('emp-notify', [ApproverController::class,'getEmployeeNotification']);
     Route::get('levstat-count', [DashboardController::class,'adminLeaveStatus']);

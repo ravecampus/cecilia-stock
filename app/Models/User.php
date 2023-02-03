@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -59,10 +60,14 @@ class User extends Authenticatable
     }
 
     public function leave(){
-        return $this->hasMany(EmployeeLeave::class, 'user_id', 'id')->where('deleted', 0);
+        return $this->hasMany(EmployeeLeave::class, 'user_id', 'id')
+        ->whereYear('created_at', Carbon::now()->format('Y'))
+        ->where('deleted', 0);
     }
 
     public function borrow(){
-        return $this->hasMany(BorrowCredit::class, 'user_id', 'id');
+        return $this->hasMany(BorrowCredit::class, 'user_id', 'id')
+        ->whereYear('created_at', Carbon::now()->format('Y'));
     }
+
 }
