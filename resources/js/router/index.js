@@ -22,6 +22,7 @@ import LeaveCredit from '../user/LeaveCredit';
 import LeaveHistory from '../user/History';
 import ApprovedLeave from '../user/ApprovedLeave';
 import Homed from '../user/Home';
+import CancelledLeave from '../user/CancelledLeave';
 
 
 export const routes = [
@@ -127,6 +128,12 @@ export const routes = [
                 path: 'view-leave/:id',
                 component: ApprovedLeave,
             },
+            {
+                name: 'cancelledleave',
+                path: 'cancelled',
+                component: CancelledLeave,
+            },
+            
            
         ]
     }
@@ -150,7 +157,8 @@ const userRoutes = [
     'leavecredit',
     'leavehistory',
     'viewleave',
-    'homed'
+    'homed',
+    'cancelledleave'
    
 ];
 const adminRoutes = [

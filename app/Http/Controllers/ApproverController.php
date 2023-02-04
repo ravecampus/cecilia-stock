@@ -69,4 +69,32 @@ class ApproverController extends Controller
         $notify->save();
         return response()->json($notify, 200);
     }
+
+    public function cancelLeave(Request $request){
+        $columns = ['state_reason','date_from','date_to', 'remarks', 'created_at'];
+        $length = $request->length;
+        $column = $request->column;
+        $dir = $request->dir;
+        $searchValue = $request->search;
+        $query = EmployeeLeave::with('borrow', 'approvern')
+        ->where('deleted', 1)
+        ->where('user_id', Auth::id())
+        ->orderBy('created_at', $dir);
+    
+        if($searchValue){
+            $query->where(function($query) use ($searchValue){
+                $query->where('state_reason', 'like', '%'.$searchValue.'%')
+                ->orWhere('remarks', 'like', '%'.$searchValue.'%')
+                ->orWhere('ref_number', 'like', '%'.$searchValue.'%');
+            });
+        }
+        $projects = $query->paginate($length);
+        return ['data'=>$projects, 'draw'=> $request->draw];
+    }
+
+    public function leaveDelete(Request $request){
+        $leave = EmployeeLeave::find($request->id);
+        $leave->delete();
+        return response()->json($leave, 200);
+    }
 }

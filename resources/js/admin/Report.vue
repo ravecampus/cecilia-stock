@@ -10,15 +10,27 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title mb-0">Employee's Leave ({{ new Date().getFullYear() }})</h5>
+                        <h5 class="card-title mb-0">Employee's Leave ({{ this.post.year }})</h5>
                     </div>
                     <div class="card-body">
                         <div class="d-flex justify-content-between d-print-none">
                         <div class="form-group col-md-6">
-                            <input type="text" class="form-control" v-model="tableData.search"  @input="listOfUser()" placeholder="Search....">
+                            <small>Search...</small>
+                            <input type="text" class="form-control" v-model="tableData.search"  placeholder="Search....">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <small>Year</small>
+                            <select v-model="post.year" class="form-control">
+                                <option v-for="(year, index) in years" :key="index" :value="year">{{ year }}</option>
+                            </select>
                         </div>
                         <div class="btn-group">
-                            <button type="button" @click="printData()" class="btn btn-success">
+                            <button type="button"  @click="filterData()" class="btn btn-success">
+                                <i class="fa fa-filter"></i> Generate
+                            </button>
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" :disabled="printdis" @click="printData()" class="btn btn-success">
                                 <i class="fa fa-print"></i> Print
                             </button>
                         </div>
@@ -27,7 +39,7 @@
                     <hr>
                     <data-table class="mt-2" :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
                         <tbody>
-                            <tr class="tr-shadow" v-for="(list, idx) in employees" :key="idx">
+                            <tr class="tr-shadow mb-2" v-for="(list, idx) in employees" :key="idx">
                                 <td class="text-success">
                                     <strong>{{ list.last_name }}, {{list.first_name}} {{ list.middle_name }}
                                     </strong>
@@ -42,10 +54,10 @@
                                             <strong>{{ ls.number_of_days }}</strong>
                                         </div>
                                         <div>Earned :
-                                            <strong >{{ leaveConsume(list.leave, ls.id) + leaveBorrow(list.borrow, ls.id) }}</strong>
+                                            <strong >{{ leaveConsume(list.leaves, ls.id) + leaveBorrow(list.borrows, ls.id) }}</strong>
                                         </div>
                                         <div>Available :
-                                            <strong >{{ ls.number_of_days - (leaveConsume(list.leave, ls.id) + leaveBorrow(list.borrow, ls.id)) }}</strong>
+                                            <strong >{{ ls.number_of_days - (leaveConsume(list.leaves, ls.id) + leaveBorrow(list.borrows, ls.id)) }}</strong>
                                         </div>
                                     </div>
                                     <hr>
@@ -59,6 +71,11 @@
                             </tr>
 
                             <tr class="spacer"></tr>
+                            <tr class="p-3">
+                                <td colspan="6">
+                                <strong class="mt-2">{{ employees.length}}</strong> Employee /s
+                                </td>
+                            </tr>
                             
                         </tbody>
                     </data-table>
@@ -96,10 +113,13 @@ export default {
             title:"",
             leave_types:[],
             employees:[],
+            post:{},
             columns:columns,
             sortOrders:sortOrders,
             sortKey:'created_at',
+            printdis: true,
             tableData:{
+                year:"",
                 draw:0,
                 length:10,
                 search:'',
@@ -120,6 +140,13 @@ export default {
             },
         }
     },
+    computed : {
+        years () {
+            const year = new Date().getFullYear()
+            const date_ = 2019;
+            return Array.from({length: year - date_}, (value, index) => (date_+ 1) + index)
+        }
+    },
     methods: {
         listOfUser(urls='api/report'){
             this.$axios.get('sanctum/csrf-cookie').then(response => {
@@ -128,7 +155,6 @@ export default {
                 let data = res.data;
                     if(this.tableData.draw == data.draw){
                         this.employees = data.data;
-                        console.log(data.data)
                         // this.configPagination(data.data);
                     }else{
                         this.not_found = true;
@@ -184,7 +210,9 @@ export default {
         leaveConsume(data, id){
             let num = 0;
             data.forEach(val=>{
-                if(val.leave_type_id == id){
+                let yr = new Date(val.created_at).getFullYear();
+                let yrc = this.post.year;
+                if(val.leave_type_id == id && yr == yrc){
                     num += val.leave;
                 }
             });
@@ -193,7 +221,9 @@ export default {
         leaveBorrow(data, id){
             let ret = 0;
             data.forEach(val=>{
-                if(val.leave_type_id == id){
+                let yr = new Date(val.created_at).getFullYear();
+                let yrc = this.post.year;
+                if(val.leave_type_id == id && yr == yrc){
                     ret += val.credits;
                 }
             });
@@ -201,10 +231,19 @@ export default {
         },
         printData(){
             window.print();
+        },
+        filterData(){
+            if(this.post.year != null){
+                this.listOfUser();
+                this.printdis = false;
+            }else{
+                this.$emit('show',{'message':'Please select Year!', 'status':3});
+            }
+            
         }
     },
     mounted() {
-        this.listOfUser();
+        
         this.listLeaveType();
          this.title = window.Title.app_name;
         if(window.Laravel.isLoggedin){

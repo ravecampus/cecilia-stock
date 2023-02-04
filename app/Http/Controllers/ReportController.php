@@ -14,7 +14,7 @@ class ReportController extends Controller
         $column = $request->column;
         $dir = $request->dir;
         $searchValue = $request->search;
-        $query = User::with('leave', 'borrow')->select('users.*', 'departments.name as department', 'positions.name as position')
+        $query = User::with('leaves', 'borrows')->select('users.*', 'departments.name as department', 'positions.name as position')
         ->join('departments', 'departments.id','=', 'users.department_id')
         ->join('positions', 'positions.id','=', 'users.position_id')
         ->where('users.role', 0)->orderBy('last_name', 'asc');

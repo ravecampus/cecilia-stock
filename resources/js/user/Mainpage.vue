@@ -43,6 +43,11 @@
 							<i class="align-middle" data-feather="file-text"></i> <span class="align-middle">Leave History</span>
 						</router-link>
 					</li>
+					<li class="sidebar-item">
+						<router-link class="sidebar-link" :to="{name:'cancelledleave'}">
+							<i class="align-middle" data-feather="file-minus"></i> <span class="align-middle">Cancelled Leave</span>
+						</router-link>
+					</li>
 				</ul>
 			
 			</div>

@@ -28,10 +28,11 @@
                         </div>
                         <small>Duration of Leave</small> <span class="bg-success p-1 text-white" v-if="post.number_of_days > 0">{{ post.number_of_days }}</span>
                         <hr class="mt-0">
+                        <p>Note: You can apply Leave Application 2 days before Date of filing! </p>
                         <div class="row mb-3">
                             <div class="form-group col-md-4 pr-0">
                                 <label>From:</label>
-                                <Datepicker v-model="post.date_from" placeholder="Date" :format="format"/>
+                                <Datepicker v-model="post.date_from" placeholder="Date" :format="format" :input="checkDateBegin(post.date_from)"/>
                                 <span class="errors-material" v-if="errors.date_from">{{errors.date_from[0]}}</span>
                                 <span class="errors-material" v-if="errors.ext_from">{{errors.ext_from[0]}}</span>
                             </div>
@@ -304,6 +305,12 @@ export default {
         },
         checkLeaveDate(date){
 
+            if(date.date_from > date.date_to){
+                this.$emit('show',{'message':'Date To must greater than Date From!', 'status':3});
+                this.post.date_to = "";
+                return;
+            }
+
             var from = new Date(date.date_from);
             var to = new Date(date.date_to);
                 if(from.getTime() == to.getTime()){
@@ -541,6 +548,25 @@ export default {
                 });
             });
         },
+        checkDateBegin(data){
+            let d = new Date();
+            d.setDate(d.getDate() + 2);
+            let date = d.toISOString().slice(0, 10);
+
+            let day2 =  new Date(date);
+            if(data != undefined){
+                if(data >= day2){
+                    console.log('true')
+                }else{
+                
+                this.$emit('show',{'message':'Date From must be 2days before!', 'status':3});
+                this.post.date_from = "";
+                this.post.date_to = "";
+                }
+            }
+          
+            
+        }
 
     },
     mounted() {
@@ -552,6 +578,10 @@ export default {
             this.user = window.Laravel.user;
             this.auth = true;
         }
+
+        
+        console.log(this.post.date_from)
+        // if()
     },
 }
 </script>

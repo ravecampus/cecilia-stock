@@ -49,7 +49,7 @@
                                 </td>
                             </tr>
                             <tr> 
-                                <td colspan="6" v-show="!noData(users)">
+                                <td colspan="7" v-show="!noData(users)">
                                     No Result Found!
                                 </td>
                             </tr>

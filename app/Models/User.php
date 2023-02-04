@@ -70,4 +70,13 @@ class User extends Authenticatable
         ->whereYear('created_at', Carbon::now()->format('Y'));
     }
 
+    public function leaves(){
+        return $this->hasMany(EmployeeLeave::class, 'user_id', 'id')
+        ->where('deleted', 0);
+    }
+
+    public function borrows(){
+        return $this->hasMany(BorrowCredit::class, 'user_id', 'id');
+    }
+
 }
