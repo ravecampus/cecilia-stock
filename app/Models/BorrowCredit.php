@@ -10,5 +10,12 @@ class BorrowCredit extends Model
     use HasFactory;
 
     protected $table = "borrow_credits";
-    protected $fillable = ['user_id', 'employee_leave_id', 'leave_type_id', 'credits'];
+    protected $fillable = [
+        'user_id', 
+        'employee_leave_id', 
+        'leave_type_id', 
+        'status',
+        'credits',
+        'deleted',
+    ];
 }

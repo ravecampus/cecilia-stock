@@ -43,5 +43,5 @@ class EmployeeLeave extends Model
     public function approvern(){
         return $this->hasOne(User::class, 'id', 'approver');
     }
-    
+
 }

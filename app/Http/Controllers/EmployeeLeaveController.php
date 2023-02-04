@@ -92,7 +92,7 @@ class EmployeeLeaveController extends Controller
                 'user_id' => Auth::id(),
                 'employee_leave_id' => $leave->id,
                 'leave_type_id'=> $request->borrow_id,
-                'credits'=>$request->credits
+                'credits'=>$request->credits,
             ]);
         }
         
@@ -146,19 +146,29 @@ class EmployeeLeaveController extends Controller
         $leave->deleted = 1;
         $leave->save();
 
+        $borr = BorrowCredit::where('employee_leave_id', $id)->first();
+        $borr->deleted = 1;
+        $borr->save();
+
         return response()->json($leave, 200);
     }
 
     public function authConsumeLeave(){
         $leave = EmployeeLeave::where('deleted', 0)
             ->where('user_id', Auth::id())
+            ->where('status', '!=', 3)
             ->whereYear('created_at', Carbon::now()->format('Y'))->get();
 
         return response()->json($leave, 200);
     }
     public function authBarrowLeave(){
-        $leave = BorrowCredit::where('user_id', Auth::id())
-            ->whereYear('created_at', Carbon::now()->format('Y'))->get();
+
+        $leave = BorrowCredit::select('borrow_credits.*', 'employee_leave.status', 'employee_leave.deleted')
+            ->join('employee_leave', 'employee_leave.id','=', 'borrow_credits.employee_leave_id')
+            ->where('borrow_credits.user_id', Auth::id())
+            ->where('employee_leave.status', '!=', 3)
+            ->where('employee_leave.deleted', 0)
+            ->whereYear('borrow_credits.created_at', Carbon::now()->format('Y'))->get();
 
         return response()->json($leave, 200);
     }
@@ -173,7 +183,7 @@ class EmployeeLeaveController extends Controller
         ->where('deleted', 0)
         ->where('status','>=', 2)
         ->where('user_id', Auth::id())
-        // ->whereYear('created_at', Carbon::now()->format('Y'))
+        ->whereYear('created_at', Carbon::now()->format('Y'))
         ->orderBy('created_at', $dir);
     
         if($searchValue){
@@ -199,6 +209,10 @@ class EmployeeLeaveController extends Controller
         $leave = EmployeeLeave::find($request->id);
         $leave->status = 1;
         $leave->save();
+        $bor = BorrowCredit::where('employee_leave_id', $request->id)->first();
+        $bor->status = 1;
+        $bor->save();
+
         return response()->json($leave, 200);
     }
     // admin side

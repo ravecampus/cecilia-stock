@@ -217,7 +217,7 @@ export default {
 			this.$axios.get('sanctum/csrf-cookie').then(response=>{
 				this.$axios.post('api/change-notify', data).then(res=>{
 					this.getNotification();
-					this.$router.push({name:'viewleave', params:{'id':data.id}});
+					this.$router.push({name:'viewleave', params:{'id':res.data.employee_leave_id}});
 				});
 			});
 		}

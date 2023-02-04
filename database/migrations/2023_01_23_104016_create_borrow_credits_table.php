@@ -18,6 +18,8 @@ class CreateBorrowCreditsTable extends Migration
             $table->integer('user_id')->nullable();
             $table->integer('employee_leave_id')->nullable();
             $table->integer('leave_type_id')->nullable();
+            $table->integer('status')->default(0);
+            $table->integer('deleted')->default(0);
             $table->double('credits')->nullable();
             $table->timestamps();
         });

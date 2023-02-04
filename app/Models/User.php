@@ -62,21 +62,26 @@ class User extends Authenticatable
     public function leave(){
         return $this->hasMany(EmployeeLeave::class, 'user_id', 'id')
         ->whereYear('created_at', Carbon::now()->format('Y'))
+        ->where('status','!=', 3)
         ->where('deleted', 0);
     }
 
     public function borrow(){
         return $this->hasMany(BorrowCredit::class, 'user_id', 'id')
+        ->where('status','!=', 3)
+        ->where('deleted', 0)
         ->whereYear('created_at', Carbon::now()->format('Y'));
     }
 
     public function leaves(){
         return $this->hasMany(EmployeeLeave::class, 'user_id', 'id')
-        ->where('deleted', 0);
+        ->where('deleted', 0)->where('status','!=', 3);
     }
 
     public function borrows(){
-        return $this->hasMany(BorrowCredit::class, 'user_id', 'id');
+        return $this->hasMany(BorrowCredit::class, 'user_id', 'id')
+        ->where('status','!=', 3)
+        ->where('deleted', 0);
     }
 
 }

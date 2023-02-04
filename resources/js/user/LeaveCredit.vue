@@ -17,19 +17,21 @@
                             <h6 class="mb-1"><strong>{{ user.first_name + " "+user.middle_name+" "+user.last_name}}</strong> </h6>
                             <div>{{ dep_name+" ("+ pos_name+") " }}</div>
                         </div>
-                        <hr class="mt-0 d-none d-print-block">
+                        <hr class="mt-0 d-none d-print-block">                      
+                        <h3>Yearly Leave Credits</h3>
+                        <hr class="mt-0">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item" v-for="(ls,idx) in leave_credits" :key="idx">
                                 <div class="d-flex justify-content-between">
                                     <div><strong class="text-success">{{ ls.description }} </strong></div>
                                     <div>Credits
-                                        <span class="badge bg-success badge-pill">{{ ls.number_of_days }}</span>
+                                        <strong>{{ ls.number_of_days }}</strong>
                                     </div>
                                     <div>Earned
-                                         <span class="badge bg-primary badge-pill">{{ checkConsume(ls.id) + checkBorrow(ls.id) }}</span>
+                                         <strong>{{ checkConsume(ls.id) + checkBorrow(ls.id) }}</strong>
                                     </div>
                                     <div>Available
-                                         <span class="badge bg-warning badge-pill">{{ ls.number_of_days - (checkConsume(ls.id) + checkBorrow(ls.id)) }}</span>
+                                         <strong>{{ ls.number_of_days - (checkConsume(ls.id) + checkBorrow(ls.id)) }}</strong>
                                     </div>
                                 </div>
                             </li>

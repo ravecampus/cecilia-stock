@@ -40,7 +40,7 @@ class AdminSeeder extends Seeder
             'id' => 1,
             'role'=>1, 
             'first_name'=>'winsdev', 
-            'first_name'=>'2019', 
+            'last_name'=>'2019', 
             'username'=>'admin',
             // 'email'=>'admin@gmail.com',
             'password'=>bcrypt('admin')
