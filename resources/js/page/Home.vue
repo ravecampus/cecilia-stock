@@ -104,9 +104,9 @@ export default {
             let user = window.Laravel.user;
             this.auth = true;
             if(user.role == 1 || user.role == 2){
-                this.$router.push({name:'admin'})
+                this.$router.push({name:'admindashboard'})
             }else {
-               this.$router.push({name:'user'})
+               this.$router.push({name:'homed'})
 			}
         }
 	},

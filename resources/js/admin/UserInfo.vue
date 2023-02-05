@@ -70,14 +70,14 @@
                                     <li class="list-group-item" v-for="(ls,idx) in leave_credits" :key="idx">
                                         <div class="d-flex justify-content-between">
                                             <div><strong class="text-success">{{ ls.description }} </strong></div>
-                                            <div>Credits
-                                                <span class="badge bg-success badge-pill">{{ ls.number_of_days }}</span>
+                                            <div>Credits :
+                                                <strong >{{ ls.number_of_days }}</strong>
                                             </div>
-                                            <div>Earned
-                                                <span class="badge bg-primary badge-pill">{{ checkConsume(ls.id) + checkBorrow(ls.id) }}</span>
+                                            <div>Earned :
+                                                <strong>{{ checkConsume(ls.id) + checkBorrow(ls.id) }}</strong>
                                             </div>
-                                            <div>Available
-                                                <span class="badge bg-warning badge-pill">{{ ls.number_of_days - (checkConsume(ls.id) + checkBorrow(ls.id)) }}</span>
+                                            <div>Available :
+                                                <strong>{{ ls.number_of_days - (checkConsume(ls.id) + checkBorrow(ls.id)) }}</strong>
                                             </div>
                                         </div>
                                     </li>
