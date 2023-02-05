@@ -94,28 +94,28 @@
                         <hr class="mt-0">
                         <div class="row">
                             <div class="col-md-12 mb-3">
-                                <label><small>NAME :</small> <span class="text-success">{{ user.first_name+" "+user.middle_name + " "+user.last_name }}</span> </label>
+                                <label><small>NAME:</small> <span class="text-success"> {{ user.first_name+" "+user.middle_name + " "+user.last_name }}</span> </label>
                             </div>
                             <div class="col-md-12 mb-3">
-                                <label><small>LEAVE TYPE :</small> <span class="text-success">{{ leave_type.des }}</span> </label>
+                                <label><small>LEAVE TYPE:</small> <span class="text-success"> {{ leave_type.des }}</span> </label>
                             </div>
                             <div class="col-md-12 mb-1">
-                                <p><small>REASON :</small> <span class="text-success">{{ post.state_reason }}</span> </p>
+                                <p><small>REASON:</small> <span class="text-success"> {{ post.state_reason }}</span> </p>
                             </div>
                             <div class="col-md-12 mb-3">
-                                <label v-if="post.date_from != null && post.date_to != null"><small>DATE RANGE :</small> <span class="text-success">{{ formatDate(post.date_from) }} - {{ formatDate(post.date_to) }}</span> </label>
+                                <label v-if="post.date_from != null && post.date_to != null"><small>DATE RANGE:</small> <span class="text-success">{{ formatDate(post.date_from) }} - {{ formatDate(post.date_to) }}</span> </label>
                                 <hr class="m-0">
-                                <label><small>DURATION OF LEAVE :</small> <strong class="text-success">{{ post.number_of_days }}</strong> </label>
+                                <label><small>DURATION OF LEAVE: </small> <strong class="text-success">{{ post.number_of_days }}</strong> </label>
                             </div>
                             <div class="col-md-12 mb-1">
-                                <p><small>REMARKS :</small> <span class="text-success">{{ post.remarks }}</span> </p>
+                                <p><small>REMARKS: </small> <span class="text-success">{{ post.remarks }}</span> </p>
                             </div>
                             <div class="col-md-12 mb-3">
-                                <label><small> YEARLY LEAVE CREDITS :</small> </label>
+                                <label><small> YEARLY LEAVE CREDITS:</small> </label>
                                 <hr class="mt-0">
                                 <div>
                                 <ul class="list-group">
-                                    <li class="list-group-item" v-for="(lis, idex) in extractLeave(leave_types)" :key="idex">{{ lis.description+" : "+lis.number_of_days }}</li>
+                                    <li class="list-group-item" v-for="(lis, idex) in extractLeave(leave_types)" :key="idex">{{ lis.description+": "+lis.number_of_days }}</li>
                                 </ul>
                                 </div>
                             </div>

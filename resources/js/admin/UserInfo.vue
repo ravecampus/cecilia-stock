@@ -70,13 +70,13 @@
                                     <li class="list-group-item" v-for="(ls,idx) in leave_credits" :key="idx">
                                         <div class="d-flex justify-content-between">
                                             <div><strong class="text-success">{{ ls.description }} </strong></div>
-                                            <div>Credits :
+                                            <div>Credits:
                                                 <strong >{{ ls.number_of_days }}</strong>
                                             </div>
-                                            <div>Earned :
+                                            <div>Earned:
                                                 <strong>{{ checkConsume(ls.id) + checkBorrow(ls.id) }}</strong>
                                             </div>
-                                            <div>Available :
+                                            <div>Available:
                                                 <strong>{{ ls.number_of_days - (checkConsume(ls.id) + checkBorrow(ls.id)) }}</strong>
                                             </div>
                                         </div>

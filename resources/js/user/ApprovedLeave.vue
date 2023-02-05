@@ -19,8 +19,8 @@
                         </div>
                         <hr>
                         <div class="">
-                            <h5 class="mb-1">Name of Employee : <strong>{{ user.first_name + " "+user.middle_name+" "+user.last_name}}</strong> </h5>
-                            <div>Position : {{  pos_name }}</div>
+                            <h5 class="mb-1">Name of Employee: <strong>{{ user.first_name + " "+user.middle_name+" "+user.last_name}}</strong> </h5>
+                            <div>Position: {{  pos_name }}</div>
                         </div>
                         <hr class="mt-0 d-none d-print-block">
                         <div class="row mt-3">
@@ -29,29 +29,29 @@
                                     Reference #: <strong class="text-success">{{ employee_leave.ref_number }}</strong>
                                 </span>
                                 <div>
-                                  <strong>Date : {{ formatDate(employee_leave.created_at) }}</strong>
+                                  <strong>Date: {{ formatDate(employee_leave.created_at) }}</strong>
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                Apply for : <strong>{{ extractLeaveType(employee_leave.leave_type_id) }}</strong>
+                                Apply for: <strong>{{ extractLeaveType(employee_leave.leave_type_id) }}</strong>
                             </div>
                             <div class="col-md-12">
-                                Date Range : <strong>{{ formatDate(employee_leave.date_from) }} {{ extractExt(employee_leave.ext_from) }} - {{ formatDate(employee_leave.date_to) }} {{ extractExt(employee_leave.ext_to) }}  </strong>
+                                Date Range: <strong>{{ formatDate(employee_leave.date_from) }} {{ extractExt(employee_leave.ext_from) }} - {{ formatDate(employee_leave.date_to) }} {{ extractExt(employee_leave.ext_to) }}  </strong>
                             </div>
                              <div class="col-md-12" v-if="employee_leave.borrow != null">
-                                Duration : <strong>{{ employee_leave.leave  + employee_leave.borrow.credits}} day/s</strong>
+                                Duration: <strong>{{ employee_leave.leave  + employee_leave.borrow.credits}} day/s</strong>
                             </div>
                             <div class="col-md-12" v-else>
-                                Duration : <strong>{{ employee_leave.leave }} day/s</strong>
+                                Duration: <strong>{{ employee_leave.leave }} day/s</strong>
                             </div>
                         </div>
                         <ul class="list-group list-group-flush mb-2">
                            
                             <li class="list-group-item">
-                               <span class="text-secondary">Reason :</span> {{ employee_leave.state_reason }}
+                               <span class="text-secondary">Reason:</span> {{ employee_leave.state_reason }}
                             </li>
                              <li class="list-group-item">
-                                <span class="text-secondary"> Remarks :</span> {{ employee_leave.remarks }}
+                                <span class="text-secondary"> Remarks:</span> {{ employee_leave.remarks }}
                             </li>
                             <li class="list-group-item">
                               
@@ -60,13 +60,13 @@
 
                         </ul>
                             <div v-if="employee_leave.status == 3">
-                                Denied by : {{ employee_leave.approvern.first_name }} {{ employee_leave.approvern.last_name }} <small>({{ employee_leave.approvern.role == 1 ? "Supervisor" : "HR"}})</small>
+                                Denied by: {{ employee_leave.approvern.first_name }} {{ employee_leave.approvern.last_name }} <small>({{ employee_leave.approvern.role == 1 ? "Supervisor" : "HR"}})</small>
                             </div>
                              <div v-if="employee_leave.status == 2">
-                                Approved by : {{ employee_leave.approvern.first_name }} {{ employee_leave.approvern.last_name }} <small>({{ employee_leave.approvern.role == 1 ? "Supervisor" : "HR"}})</small>
+                                Approved by: {{ employee_leave.approvern.first_name }} {{ employee_leave.approvern.last_name }} <small>({{ employee_leave.approvern.role == 1 ? "Supervisor" : "HR"}})</small>
                             </div>
                              <div v-if="employee_leave.status >= 2">
-                                Feedback : {{ employee_leave.feedback }}
+                                Feedback: {{ employee_leave.feedback }}
                             </div>
                         <hr>
                         <div>
