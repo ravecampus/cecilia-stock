@@ -147,8 +147,11 @@ class EmployeeLeaveController extends Controller
         $leave->save();
 
         $borr = BorrowCredit::where('employee_leave_id', $id)->first();
-        $borr->deleted = 1;
-        $borr->save();
+        if(isset($borr)){
+            $borr->deleted = 1;
+            $borr->save();
+        }
+        
 
         return response()->json($leave, 200);
     }
@@ -209,9 +212,13 @@ class EmployeeLeaveController extends Controller
         $leave = EmployeeLeave::find($request->id);
         $leave->status = 1;
         $leave->save();
+        
         $bor = BorrowCredit::where('employee_leave_id', $request->id)->first();
-        $bor->status = 1;
-        $bor->save();
+        if(isset($bor)){
+            $bor->status = 1;
+            $bor->save();
+        }
+        
 
         return response()->json($leave, 200);
     }

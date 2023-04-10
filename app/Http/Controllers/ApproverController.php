@@ -28,8 +28,10 @@ class ApproverController extends Controller
                 ]);
         }
         $borr = BorrowCredit::where('employee_leave_id', $request->id)->first();
-        $borr->status = $request->status;
-        $borr->save();
+        if(isset($borr)){
+            $borr->status = $request->status;
+            $borr->save();
+        }
 
         return response()->json($leave, 200);
     }
@@ -99,7 +101,9 @@ class ApproverController extends Controller
         $leave = EmployeeLeave::find($request->id);
         $leave->delete();
         $borr = BorrowCredit::where('employee_leave_id', $request->id)->first();
-        $borr->deleted();
+        if(isset($borr)){
+            $borr->deleted();
+        }
         return response()->json($leave, 200);
     }
 }

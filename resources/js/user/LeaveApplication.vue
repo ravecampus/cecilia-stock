@@ -147,7 +147,7 @@
                                     <td><span class="text-muted">{{ extractStatus(list.status) }}</span></td>
                                     <td><span class="text-muted">{{ formatDate(list.created_at) }}</span></td>
                                     <td>                                           
-                                        <button class="btn btn-danger btn-sm" v-if="list.status == 0" data-toggle="tooltip" @click="cancelRequest(list)" title="Edit">
+                                        <button class="btn btn-danger btn-sm" v-if="list.status == 0" data-toggle="tooltip" @click="cancelRequest(list)" title="Cancel">
                                             <i class="fa fa-close"></i> Cancel
                                         </button>
                                         
