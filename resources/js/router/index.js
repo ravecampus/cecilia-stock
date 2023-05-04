@@ -14,6 +14,9 @@ import AdminViewApp from '../admin/ViewApp';
 import LeaveStatus from '../admin/LeaveStatus';
 import AdminDashboard from '../admin/Dashboard';
 import Report from '../admin/Report';
+import LeaveReport from '../admin/LeaveReport';
+import LeaveList from '../admin/LeaveList';
+import PrintReport from '../admin/PrintReport';
 
 import User from '../user/Mainpage';
 import Profile from '../user/Profile';
@@ -90,7 +93,24 @@ export const routes = [
                 name: 'adminreport',
                 path: 'report',
                 component: Report,
+            },
+            {
+                name: 'adminleavereport',
+                path: 'leave-report',
+                component: LeaveReport,
+            },
+            {
+                name: 'adminleavelist',
+                path: 'leave-list/:id',
+                component: LeaveList,
+            },
+            {
+                name: 'adminprintreport',
+                path: 'print-view/:id',
+                component: PrintReport,
             }
+
+
         ]
     },
     {
@@ -173,7 +193,10 @@ const adminRoutes = [
     'adminviewleave',
     'adminleavestatus',
     'admindashboard',
-    'adminreport'
+    'adminreport',
+    'adminleavereport',
+    'adminleavelist',
+    'adminprintreport'
     
 ];
 

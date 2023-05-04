@@ -75,7 +75,7 @@ class User extends Authenticatable
 
     public function leaves(){
         return $this->hasMany(EmployeeLeave::class, 'user_id', 'id')
-        ->where('deleted', 0)->where('status','!=', 3);
+        ->where('deleted', 0)->where('status','!=', 3)->with('borrow','type');
     }
 
     public function borrows(){

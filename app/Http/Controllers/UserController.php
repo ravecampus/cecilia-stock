@@ -89,7 +89,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::with('position','department','leave', 'borrow')->find($id);
+        $user = User::with('position','department','leave', 'borrow', 'leaves')->find($id);
         return response()->json($user, 200);
     }
 

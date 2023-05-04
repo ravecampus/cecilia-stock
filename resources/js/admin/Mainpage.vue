@@ -65,9 +65,14 @@
 
 					<li class="sidebar-item">
 						<router-link class="sidebar-link" :to="{name:'adminreport'}">
-             		    	<i class="align-middle" data-feather="square"></i> <span class="align-middle">Report</span>
+             		    	<i class="align-middle" data-feather="square"></i> <span class="align-middle">Leave Summary Report</span>
 						</router-link>
-					</li>			
+					</li>	
+					<li class="sidebar-item">
+						<router-link class="sidebar-link" :to="{name:'adminleavereport'}">
+             		    	<i class="align-middle" data-feather="square"></i> <span class="align-middle">Leave Reports</span>
+						</router-link>
+					</li>				
 				</ul>
 			</div>
 		</nav>

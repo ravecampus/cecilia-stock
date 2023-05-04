@@ -1,38 +1,14 @@
 <template>
     <div class="container-fluid p-0">
-        <div class="text-center d-none d-print-block mb-5">
-            <h4>{{ title }}</h4>
-            <h6>Davao City, Philippines</h6>
-        </div>
-        <h1 class="h3 mb-3 d-print-none">Report</h1>
-
+        <h1 class="h3 mb-3 d-print-none">Leave Reports</h1>
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">Employee's Leave ({{ this.post.year }})</h5>
-                    </div>
                     <div class="card-body">
                         <div class="d-flex justify-content-between d-print-none">
                         <div class="form-group col-md-6">
                             <small>Search...</small>
-                            <input type="text" class="form-control" v-model="tableData.search"  placeholder="Search....">
-                        </div>
-                        <div class="form-group col-md-3">
-                            <small>Year</small>
-                            <select v-model="post.year" class="form-control">
-                                <option v-for="(year, index) in years" :key="index" :value="year">{{ year }}</option>
-                            </select>
-                        </div>
-                        <div class="btn-group">
-                            <button type="button"  @click="filterData()" class="btn btn-success">
-                                <i class="fa fa-filter"></i> Generate
-                            </button>
-                        </div>
-                        <div class="btn-group">
-                            <button type="button" :disabled="printdis" @click="printData()" class="btn btn-success">
-                                <i class="fa fa-print"></i> Print
-                            </button>
+                            <input type="text" class="form-control" v-model="tableData.search" @input="listOfUser()" placeholder="Search....">
                         </div>
                     </div>
 
@@ -47,21 +23,9 @@
                                 <td class="desc">{{ extractGender(list.gender) }}</td>
                                 <td class="desc">{{ list.position }}</td>
                                 <td>
-                                <li class="list-group-item" v-for="(ls,idx) in leave_types" :key="idx">
-                                    <div class="d-flex justify-content-between">
-                                        <strong class="">{{ ls.description }}</strong>
-                                        <div>Credits:
-                                            <strong>{{ ls.number_of_days }}</strong>
-                                        </div>
-                                        <div>Earned:
-                                            <strong >{{ leaveConsume(list.leaves, ls.id) + leaveBorrow(list.borrows, ls.id) }}</strong>
-                                        </div>
-                                        <div>Available:
-                                            <strong >{{ ls.number_of_days - (leaveConsume(list.leaves, ls.id) + leaveBorrow(list.borrows, ls.id)) }}</strong>
-                                        </div>
+                                    <div class="btn-group">
+                                        <button type="button" @click="viewLeave(list)" class="btn btn-success">View</button>
                                     </div>
-                                    <hr>
-                                </li>
                                 </td>
                             </tr>
                             <tr> 
@@ -103,7 +67,7 @@ export default {
         {label:'Name', name:null},
         {label:'Gender', name:null},
         {label:'Position', name:null},
-        {label:'Leave Credits', name:null},
+        {label:'Action', name:null},
         ];
         
         columns.forEach(column=>{
@@ -207,28 +171,7 @@ export default {
                 });
             });
         },
-        leaveConsume(data, id){
-            let num = 0;
-            data.forEach(val=>{
-                let yr = new Date(val.created_at).getFullYear();
-                let yrc = this.post.year;
-                if(val.leave_type_id == id && yr == yrc){
-                    num += val.leave;
-                }
-            });
-            return num;
-        },
-        leaveBorrow(data, id){
-            let ret = 0;
-            data.forEach(val=>{
-                let yr = new Date(val.created_at).getFullYear();
-                let yrc = this.post.year;
-                if(val.leave_type_id == id && yr == yrc){
-                    ret += val.credits;
-                }
-            });
-            return ret;
-        },
+
         printData(){
             window.print();
         },
@@ -240,16 +183,20 @@ export default {
                 this.$emit('show',{'message':'Please select Year!', 'status':3});
             }
             
+        },
+        viewLeave(data){
+            this.$router.push({name:'adminleavelist', params:{'id':data.id}})
         }
     },
     mounted() {
         
         this.listLeaveType();
-        this.title = window.Title.app_name;
+         this.title = window.Title.app_name;
         if(window.Laravel.isLoggedin){
             // this.user = window.Laravel.user;
             // this.auth = true;
         }
+        this.listOfUser();
     },
 }
 </script>
