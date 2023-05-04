@@ -36,7 +36,7 @@
                 </div>
                 <div class="col-12 mb-2">
                     <label>Duration: </label>&nbsp;
-                    <span class="bold h4" v-if="borrow.credits != null"> {{ leave.leave + borrow.credits}} day/s</span>
+                    <span class="bold h4" v-if="borrow != null"> {{ leave.leave + borrow.credits}} day/s</span>
                     <span class="bold h4" v-else> {{ leave.leave }} day/s</span>
                 </div>
                 <div class="col-12 mb-2">
