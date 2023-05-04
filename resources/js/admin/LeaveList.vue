@@ -54,7 +54,15 @@
                                                     <strong class="text-success">{{ ls.ref_number }}</strong>
                                                 </td>
                                                 <td>{{ ls.type.description }}</td>
-                                                <td>{{ ls.leave + ls.borrow.credits }}</td>
+                                                <td>
+                                                    <span v-if="ls.borrow != null">
+                                                    {{ ls.leave + ls.borrow.credits }}
+                                                    </span>
+                                                    <span v-else>
+                                                    {{ ls.leave }}
+                                                    </span>
+
+                                                </td>
                                                 <td>{{  new Date(ls.created_at).getFullYear() }}</td>
                                                 <td>
                                                     <div class="btn-group">
