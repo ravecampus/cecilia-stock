@@ -55,6 +55,14 @@
                                         </div>
                                         <div>Earned:
                                             <strong >{{ leaveConsume(list.leaves, ls.id) + leaveBorrow(list.borrows, ls.id) }}</strong>
+                                            <ul class="m-0">
+                                                <li v-for="(lss, idxx) in listLeave(list.leaves, ls.id)" :key="idxx">
+                                                 <strong>({{ lss.leave }})</strong>   {{ formatDate(lss.created_at) }}
+                                                </li>
+                                                <li v-for="(lss, idxx) in listLeavebarrow(list.borrows, ls.id)" :key="idxx">
+                                                 <strong>({{ lss.credits }})</strong>   {{ formatDate(lss.created_at) }} - <small>borrowed</small>
+                                                </li>
+                                            </ul>
                                         </div>
                                         <div>Available:
                                             <strong >{{ ls.number_of_days - (leaveConsume(list.leaves, ls.id) + leaveBorrow(list.borrows, ls.id)) }}</strong>
@@ -240,6 +248,28 @@ export default {
                 this.$emit('show',{'message':'Please select Year!', 'status':3});
             }
             
+        },
+        listLeave(data,id){
+            let ret = [];
+           data.forEach(val=>{
+                let yr = new Date(val.created_at).getFullYear();
+                let yrc = this.post.year;
+                if(val.leave_type_id == id && yr == yrc){
+                    ret.push(val);
+                }
+           });
+           return ret;
+        },
+        listLeavebarrow(data,id){
+            let ret = [];
+           data.forEach(val=>{
+                let yr = new Date(val.created_at).getFullYear();
+                let yrc = this.post.year;
+                if(val.leave_type_id == id && yr == yrc){
+                    ret.push(val);
+                }
+           });
+           return ret;
         }
     },
     mounted() {
