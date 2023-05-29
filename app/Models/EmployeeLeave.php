@@ -30,7 +30,7 @@ class EmployeeLeave extends Model
 
     public function borrow()
     {
-        return $this->hasOne(BorrowCredit::class, 'employee_leave_id', 'id');
+        return $this->hasOne(BorrowCredit::class, 'employee_leave_id', 'id')->with('leaveme');
     }
 
     public function user(){

@@ -79,7 +79,7 @@ class User extends Authenticatable
     }
 
     public function borrows(){
-        return $this->hasMany(BorrowCredit::class, 'user_id', 'id')
+        return $this->hasMany(BorrowCredit::class, 'user_id', 'id')->with('leaveme')
         ->where('status','!=', 3)
         ->where('deleted', 0);
     }

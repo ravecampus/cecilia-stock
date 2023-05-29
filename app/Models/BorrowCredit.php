@@ -17,5 +17,10 @@ class BorrowCredit extends Model
         'status',
         'credits',
         'deleted',
-    ];
+    ];  
+
+    public function leaveme()
+    {
+        return $this->hasOne(EmployeeLeave::class, 'id', 'employee_leave_id');
+    }
 }

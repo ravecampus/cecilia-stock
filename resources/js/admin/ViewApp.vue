@@ -1,9 +1,18 @@
 <template>
     <div class="container-fluid p-0">
-
-        <h1 class="h3 mb-3">Leave Application Request</h1>
-        
-        <div class="row">
+         <div class="text-center d-none d-print-block mb-5">
+            <h4>{{ title }}</h4>
+            <h6>Davao City, Philippines</h6>
+        </div>
+        <div class="d-flex justify-content-between">
+            <h1 class="h3 mb-3">Leave Application Request</h1>
+            <div class="btn-group d-print-none">
+                <button type="button" :disabled="printdis" @click="printData()" class="btn btn-success">
+                    <i class="fa fa-print"></i> Print
+                </button>
+            </div>  
+        </div>
+        <div class="row mt-2">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body shadow" v-if="leave.id != null">
@@ -135,6 +144,7 @@ export default {
             borrow:{},
             post:{},
             errors:[],
+            title:"",
         }
     },
     methods: {
@@ -192,10 +202,14 @@ export default {
         extractStatus(id){
             return id == 0 ? "Sent" : (id==1) ? "Received" :(id == 2) ? "Approved" :"Denied";
         },
+        printData(){
+            window.print();
+        },
     },
     mounted() {
         let id = this.$route.params.id;
         this.getEmoloyeeLeave(id);
+        this.title = window.Title.app_name;
     },
 }
 </script>

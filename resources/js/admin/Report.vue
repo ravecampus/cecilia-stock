@@ -57,10 +57,12 @@
                                             <strong >{{ leaveConsume(list.leaves, ls.id) + leaveBorrow(list.borrows, ls.id) }}</strong>
                                             <ul class="m-0">
                                                 <li v-for="(lss, idxx) in listLeave(list.leaves, ls.id)" :key="idxx">
-                                                 <strong>({{ lss.leave }})</strong>   {{ formatDate(lss.created_at) }}
+                                                 
+                                                 <strong>({{ lss.leave }})</strong>   {{ formatDate(lss.date_from) }} ({{ extractExt(lss.ext_from) }}) - {{ formatDate(lss.date_to) }} ({{ extractExt(lss.ext_to) }})
                                                 </li>
-                                                <li v-for="(lss, idxx) in listLeavebarrow(list.borrows, ls.id)" :key="idxx">
-                                                 <strong>({{ lss.credits }})</strong>   {{ formatDate(lss.created_at) }} - <small>borrowed</small>
+                                                <li class="text-muted" v-for="(lss, idxx) in listLeavebarrow(list.borrows, ls.id)" :key="idxx">
+                                                       
+                                                 <strong>({{ lss.credits }})</strong>   {{ formatDate(lss.leaveme.date_from) }} ({{ extractExt(lss.leaveme.ext_from) }}) - {{ formatDate(lss.leaveme.date_to) }} ({{ extractExt(lss.leaveme.ext_to) }}) (<small>borrowed</small>)
                                                 </li>
                                             </ul>
                                         </div>
@@ -270,7 +272,10 @@ export default {
                 }
            });
            return ret;
-        }
+        },
+        extractExt(num){
+            return num == 1 ? "AM" : "PM";
+        },
     },
     mounted() {
         
