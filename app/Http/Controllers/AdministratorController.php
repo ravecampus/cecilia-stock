@@ -118,6 +118,7 @@ class AdministratorController extends Controller
         $user->last_name = $request->last_name;
         $user->gender = $request->gender;
         $user->role = $request->role;
+        $user->username = $request->username;
         $user->save();
         return response()->json($user, 200);
     }
