@@ -105,7 +105,7 @@
                                             <option :value="1">Male</option>
                                             <option :value="2">Female</option>
                                         </select>
-                                        <span class="errors-material" v-if="errors.first_name">{{errors.first_name[0]}}</span>
+                                        <span class="errors-material" v-if="errors.gender">{{errors.gender[0]}}</span>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Role</label>
