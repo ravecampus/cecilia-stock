@@ -376,7 +376,7 @@ export default {
         extractNonLeaveType(id){
             let _use = [];
             this.leave_types.forEach(vl=>{
-                if(id != vl.id){
+                if(id != vl.id && vl.usable == 1){
                     _use.push(vl);
                 }
             });
@@ -402,7 +402,7 @@ export default {
 
         setLeaveUsable(id){
             this.leave_types.forEach((vl,idx) => {
-                if(vl.id == id){
+                if(vl.id == id && vl.usable == 1){
                     this.borrow = {'id':vl.id, 'des' : vl.description, 'num':vl.number_of_days };
                     this.availuse= vl.number_of_days - (this.checkConsume(vl.id) + this.checkBorrow(vl.id));
 
@@ -439,9 +439,9 @@ export default {
         extractLeave(data){
             let ret = [];
             data.forEach(val => {
-                if(val.usable == 1){
+                // if(val.usable == 1){
                     ret.push(val);
-                }
+                // }
             });
 
             return ret;
@@ -556,7 +556,7 @@ export default {
             let day2 =  new Date(date);
             if(data != undefined){
                 if(data >= day2){
-                    console.log('true')
+                    // console.log('true')
                 }else{
                 
                 this.$emit('show',{'message':'Date From must be 2days before!', 'status':3});

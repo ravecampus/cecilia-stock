@@ -23271,7 +23271,7 @@ __webpack_require__.r(__webpack_exports__);
     extractNonLeaveType: function extractNonLeaveType(id) {
       var _use = [];
       this.leave_types.forEach(function (vl) {
-        if (id != vl.id) {
+        if (id != vl.id && vl.usable == 1) {
           _use.push(vl);
         }
       });
@@ -23302,7 +23302,7 @@ __webpack_require__.r(__webpack_exports__);
     setLeaveUsable: function setLeaveUsable(id) {
       var _this3 = this;
       this.leave_types.forEach(function (vl, idx) {
-        if (vl.id == id) {
+        if (vl.id == id && vl.usable == 1) {
           _this3.borrow = {
             'id': vl.id,
             'des': vl.description,
@@ -23340,10 +23340,11 @@ __webpack_require__.r(__webpack_exports__);
     extractLeave: function extractLeave(data) {
       var ret = [];
       data.forEach(function (val) {
-        if (val.usable == 1) {
-          ret.push(val);
-        }
+        // if(val.usable == 1){
+        ret.push(val);
+        // }
       });
+
       return ret;
     },
     sendRequest: function sendRequest() {
@@ -23471,7 +23472,7 @@ __webpack_require__.r(__webpack_exports__);
       var day2 = new Date(date);
       if (data != undefined) {
         if (data >= day2) {
-          console.log('true');
+          // console.log('true')
         } else {
           this.$emit('show', {
             'message': 'Date From must be 2days before!',
